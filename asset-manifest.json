@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/citizens-vote/static/css/main.19393e92.chunk.css",
+    "main.js": "/citizens-vote/static/js/main.386b86cf.chunk.js",
+    "main.js.map": "/citizens-vote/static/js/main.386b86cf.chunk.js.map",
+    "runtime~main.js": "/citizens-vote/static/js/runtime~main.074be6c1.js",
+    "runtime~main.js.map": "/citizens-vote/static/js/runtime~main.074be6c1.js.map",
+    "static/js/2.b41502e9.chunk.js": "/citizens-vote/static/js/2.b41502e9.chunk.js",
+    "static/js/2.b41502e9.chunk.js.map": "/citizens-vote/static/js/2.b41502e9.chunk.js.map",
+    "index.html": "/citizens-vote/index.html",
+    "precache-manifest.d43d1fb46635a34ac799e7a37703fd39.js": "/citizens-vote/precache-manifest.d43d1fb46635a34ac799e7a37703fd39.js",
+    "service-worker.js": "/citizens-vote/service-worker.js",
+    "static/css/main.19393e92.chunk.css.map": "/citizens-vote/static/css/main.19393e92.chunk.css.map",
+    "static/media/logo.svg": "/citizens-vote/static/media/logo.5d5d9eef.svg"
+  }
+}
