@@ -15,6 +15,9 @@ const styles = (theme: any) => ({
   }
 });
 
+/**
+ * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
+ */
 class App extends React.Component {
   state = {
     open: false
@@ -36,8 +39,8 @@ class App extends React.Component {
     const { open } = this.state;
 
     return (
-      <div>
-        <Dialog open={open} onClose={this.handleClose}>
+      <div className={"centerColumn"}>
+        {/* <Dialog open={open} onClose={this.handleClose}>
           <DialogTitle>Super Secret Password</DialogTitle>
           <DialogContent>
             <DialogContentText>1-2-3-4-5</DialogContentText>
@@ -47,19 +50,44 @@ class App extends React.Component {
               OK
             </Button>
           </DialogActions>
-        </Dialog>
-        <Typography variant="h4" gutterBottom>
-          Material-UI
+        </Dialog> */}
+        <Typography variant="h1" gutterBottom>
+          Data Driven Democracy in Ireland
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          example project
+        <Typography variant="body1" gutterBottom>
+          Through the use of the{" "}
+          <a href="https://api.oireachtas.ie/">Oireachtas Open Data API</a>;
+          this website allows you to vote on current Dáil legislation, and
+          record that vote permanently to the Ethereum Blockchain.
         </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={this.handleClick}
-        >
-          Super Secret Password
+        <Typography variant="body1" gutterBottom>
+          Let's stop re-electing T.D's on nice sounding rhetoric and promises,
+          their name-recognition and ugly mugs posted on every street lamp.
+          Let's start making <i>data-driven</i> decisions to elect our
+          politicians.
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Citizens vote allows for any citizen to build up a voting record that
+          they <em>cannot</em> change. This allows first time candidates for
+          elected office to be compared against incumbent candidates{" "}
+          <i>vote for vote</i>. How do the two measure up on climate change
+          bills? How do the incumbent and challenger compare on tax bills?
+          Abortion rights? Any contentious bill a voter wants to look at, if the
+          challenger has been commiting his votes to the blockchain, a voter can
+          trust that the candidate could not have changed that vote since the
+          time it was cast. They can now fairly compare how the challenger voted
+          and how the incumbent voted in the Dáil. Rather than relying on what
+          candidates say they are going to do during the election cycle.
+        </Typography>
+        <Typography variant="h6" gutterBottom>
+          It's time for informed voters to stop looking at what elected
+          officials say, and to start looking at how they are voting. This
+          project isn't a fully fledged application to do all that this entails.
+          But it is a step in the right direction, helping Ireland take steps to
+          becoming a more accountable and transparent Democracy.
+        </Typography>
+        <Button variant="contained" color="primary" onClick={this.handleClick}>
+          Tell Me More
         </Button>
       </div>
     );

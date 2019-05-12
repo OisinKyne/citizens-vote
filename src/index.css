@@ -1,10 +1,18 @@
 body {
-  margin: 0;
+  max-width: 100%;
+  margin: 0px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.centerColumn {
+  margin: auto;
+  max-width: 960px;
+  width: 60%;
+  min-width: 500px;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
