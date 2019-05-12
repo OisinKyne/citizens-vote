@@ -40,7 +40,7 @@ class App extends React.Component {
 
     return (
       <div className={"centerColumn"}>
-        {/* <Dialog open={open} onClose={this.handleClose}>
+        <Dialog open={open} onClose={this.handleClose}>
           <DialogTitle>Super Secret Password</DialogTitle>
           <DialogContent>
             <DialogContentText>1-2-3-4-5</DialogContentText>
@@ -50,7 +50,7 @@ class App extends React.Component {
               OK
             </Button>
           </DialogActions>
-        </Dialog> */}
+        </Dialog>
         <Typography variant="h1" gutterBottom>
           Data Driven Democracy in Ireland
         </Typography>
