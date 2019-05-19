@@ -8,6 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
+import OnboardingComponent from "./OnboardingComponent/OnboardingComponent";
 
 const styles = (theme: any) => ({
   root: {
@@ -86,9 +87,8 @@ class App extends React.Component {
           But it is a step in the right direction, helping Ireland take steps to
           becoming a more accountable and transparent Democracy.
         </Typography>
-        <Button variant="contained" color="primary" onClick={this.handleClick}>
-          Tell Me More
-        </Button>
+
+        <OnboardingComponent />
       </div>
     );
   }

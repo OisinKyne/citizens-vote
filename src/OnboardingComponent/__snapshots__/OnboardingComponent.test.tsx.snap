@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Section of the landing page visible if no injected web3 provider is present:  Contains an <a> tag that links to metamask.  1`] = `
+<img
+  src="www.google.ie"
+/>
+`;
+
+exports[`Section of the landing page visible if no injected web3 provider is present:  Has an <img> tag inside it's HTML.  1`] = `
+<List
+  ordered={false}
+>
+  <ListItem>
+    Item 1
+  </ListItem>
+  <ListItem>
+    Item 1
+  </ListItem>
+</List>
+`;
+
+exports[`Section of the landing page visible if no injected web3 provider is present:  Is invisible if web3Injected is passed in as true 1`] = `
+
+`;
