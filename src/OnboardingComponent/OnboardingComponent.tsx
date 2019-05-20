@@ -9,9 +9,16 @@ const styles = (theme: any) => ({
 });
 
 class OnboardingComponent extends React.Component {
-  state = {
-    open: false
-  };
+  state = { open: true };
+
+  constructor(props: any) {
+    super(props);
+
+    if (props.web3Injected === true) {
+      console.log("Web3 is injected into this Onboarding object.");
+      this.state = { open: false };
+    }
+  }
 
   render() {
     return (
