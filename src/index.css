@@ -20,3 +20,8 @@ code {
 .paper {
   padding: 20px;
 }
+
+.onboardingDiv {
+  width: 100%;
+  margin: auto;
+}

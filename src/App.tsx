@@ -45,7 +45,7 @@ class App extends React.Component {
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              <Typography variant="h1" gutterBottom>
+              <Typography variant="h2" gutterBottom>
                 Data Driven Democracy in Ireland
               </Typography>
               <Typography variant="body1" gutterBottom>
@@ -87,12 +87,12 @@ class App extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper>
+            <Paper className={"paper"}>
               <OnboardingComponent web3Injected={true} />
             </Paper>
           </Grid>
-          <Grid item xs={6}>
-            <Paper>xs=6</Paper>
+          <Grid item xs={12}>
+            <Paper className={"paper"}>No bills found</Paper>
           </Grid>
         </Grid>
       </div>

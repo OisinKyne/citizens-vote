@@ -7,7 +7,7 @@ describe("Section of the landing page visible if no injected web3 provider is pr
 
   it("Creates a component ", async function() {
     const props = {};
-    const onboardingComponent = new OnboardingComponent(props);
+    const onboardingComponent = shallow(<OnboardingComponent />);
     expect(onboardingComponent).toBeDefined();
   });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import withRoot from "../withRoot";
-import { withStyles } from "@material-ui/core";
+import { withStyles, Grid, Typography } from "@material-ui/core";
+import MetaMaskLogo from "../static/ethereum-metamask-chrome.png";
 
 const styles = (theme: any) => ({
   root: {
@@ -22,8 +23,21 @@ class OnboardingComponent extends React.Component {
 
   render() {
     return (
-      <div className={"OnboardingDiv"}>
-        <img src="https://www.udemy.com/staticx/udemy/images/v6/logo-coral.svg" />
+      <div className={"onboardingDiv"}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            ˇ<img src={MetaMaskLogo} />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body1" gutterBottom>
+              This application connects to the Blockchain through a Chrome
+              Extension called{" "}
+              <a href="https://metamask.io/" target="_blank">
+                Metamask
+              </a>
+            </Typography>
+          </Grid>
+        </Grid>
       </div>
     );
   }
