@@ -5,32 +5,42 @@ import OnboardingComponent from "./OnboardingComponent/OnboardingComponent";
 import ListComponent from "./ListComponent/ListComponent";
 import { Grid, Paper } from "@material-ui/core";
 import Oireachtas from "./OireachtasService/oireachtas";
+import Bill from "./OireachtasService/interfaces/iBill";
 
 /**
  * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
  */
 class App extends React.Component {
   state = {
-    open: false
+    castVoteModalOpen: false,
+    bills: []
   };
 
   constructor(props: any) {
     super(props);
     const oireachtasService = new Oireachtas();
-    console.log("App Constructor: Oireachtas Service:");
-    console.log(oireachtasService);
     const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl();
-    console.log("Url to query for bills: ");
-    console.log(billsApiRequestUrl);
-    const handleDailResponse = function(response: any) {
-      // This is the function called with the dail response object.
-      console.log("Dail api request resolved. Response: ");
-      console.log(response);
-    };
 
-    oireachtasService.getDailBills(billsApiRequestUrl, handleDailResponse);
+    // Get Dail Bills
+    oireachtasService
+      .getDailBills(billsApiRequestUrl)
+      .then(response => {
+        // If there are bills returned in this response, save them to the state.
+        if (response.results) {
+          const newBills: Bill[] = response.results.map(function(result) {
+            return result.bill;
+          });
+          this.setState({ ...this.state, bills: newBills });
+        }
+      })
+      .catch(error => {
+        console.log(
+          "Error thrown while trying to retrieve bills from the oireachtas api. "
+        );
+        console.log(error);
+      });
   }
-
+  onComponentDidMount() {}
   handleClose = () => {
     this.setState({
       open: false
@@ -44,7 +54,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { open } = this.state;
+    const { castVoteModalOpen, bills } = this.state;
 
     return (
       <div className={"centerColumn"}>
@@ -106,7 +116,7 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              No bills found. <ListComponent />
+              No bills found. <ListComponent billsList={bills} />
             </Paper>
           </Grid>
         </Grid>

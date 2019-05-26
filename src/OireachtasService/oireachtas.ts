@@ -1,3 +1,5 @@
+import APIResponse from "./interfaces/iAPIResponse";
+
 export default class Oireachtas {
   /**
    * Get the current bills in the Dail.
@@ -6,7 +8,7 @@ export default class Oireachtas {
    *
    * Returns a promise that resolves to the request body as text. Rejects if there is an error.
    */
-  public getDailBills(url: string): Promise<any> {
+  public getDailBills(url: string): Promise<APIResponse> {
     return new Promise(function(resolve, reject) {
       var rp = require("request-promise-native");
       rp(url)
