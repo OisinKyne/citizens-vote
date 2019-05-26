@@ -2,7 +2,9 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import withRoot from "./withRoot";
 import OnboardingComponent from "./OnboardingComponent/OnboardingComponent";
+import ListComponent from "./ListComponent/ListComponent";
 import { Grid, Paper } from "@material-ui/core";
+import Oireachtas from "./OireachtasService/oireachtas";
 
 /**
  * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
@@ -11,6 +13,23 @@ class App extends React.Component {
   state = {
     open: false
   };
+
+  constructor(props: any) {
+    super(props);
+    const oireachtasService = new Oireachtas();
+    console.log("App Constructor: Oireachtas Service:");
+    console.log(oireachtasService);
+    const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl();
+    console.log("Url to query for bills: ");
+    console.log(billsApiRequestUrl);
+    const handleDailResponse = function(response: any) {
+      // This is the function called with the dail response object.
+      console.log("Dail api request resolved. Response: ");
+      console.log(response);
+    };
+
+    oireachtasService.getDailBills(billsApiRequestUrl, handleDailResponse);
+  }
 
   handleClose = () => {
     this.setState({
@@ -57,23 +76,17 @@ class App extends React.Component {
                 and record that vote permanently to the Ethereum Blockchain.
               </Typography>
               <Typography variant="body1" gutterBottom>
-                Let's stop re-electing T.D's on nice sounding rhetoric and
-                promises, their name-recognition and ugly mugs posted on every
-                street lamp. Let's start making <i>data-driven</i> decisions to
-                elect our politicians.
-              </Typography>
-              <Typography variant="body1" gutterBottom>
                 Citizens vote allows for any citizen to build up a voting record
                 that they <em>cannot</em> change. This allows first time
                 candidates for elected office to be compared against incumbent
                 candidates <i>vote for vote</i>. How do the two measure up on
                 climate change bills? How do the incumbent and challenger
                 compare on tax bills? Abortion rights? Any contentious bill a
-                voter wants to look at, if the challenger has been commiting his
-                votes to the blockchain, a voter can trust that the candidate
-                could not have changed that vote since the time it was cast.
-                They can now fairly compare how the challenger voted and how the
-                incumbent voted in the Dáil. Rather than relying on what
+                voter wants to look at, if the challenger has been commiting
+                their votes to the blockchain, a voter can trust that the
+                candidate could not have changed that vote since the time it was
+                cast. They can now fairly compare how the challenger voted and
+                how the incumbent voted in the Dáil. Rather than relying on what
                 candidates say they are going to do during the election cycle.
               </Typography>
               <Typography variant="h6" gutterBottom>
@@ -88,11 +101,13 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              <OnboardingComponent web3Injected={true} />
+              <OnboardingComponent web3Injected={false} />
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={"paper"}>No bills found</Paper>
+            <Paper className={"paper"}>
+              No bills found. <ListComponent />
+            </Paper>
           </Grid>
         </Grid>
       </div>

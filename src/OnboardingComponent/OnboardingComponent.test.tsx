@@ -25,7 +25,9 @@ describe("Section of the landing page visible if no injected web3 provider is pr
 
   it("Contains an <a> tag that links to metamask. ", async function() {
     const shallowComponent = shallow(<OnboardingComponent />);
-    const metaMaskUrl = shallowComponent.find("a#metamask-url");
+    console.log("Metamask shallow object:");
+    console.log(shallowComponent);
+    const metaMaskUrl = shallowComponent.find("a#metamaskUrl");
     expect(metaMaskUrl).toEqual("metamask.com");
   });
 });

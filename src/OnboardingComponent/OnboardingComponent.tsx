@@ -1,13 +1,7 @@
 import React from "react";
 import withRoot from "../withRoot";
-import { withStyles, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import MetaMaskLogo from "../static/ethereum-metamask-chrome.png";
-
-const styles = (theme: any) => ({
-  root: {
-    paddingTop: theme.spacing.unit * 20
-  }
-});
 
 class OnboardingComponent extends React.Component {
   state = { open: true };
@@ -22,11 +16,20 @@ class OnboardingComponent extends React.Component {
   }
 
   render() {
+    if (this.state.open === false) {
+      return null;
+    }
     return (
       <div className={"onboardingDiv"}>
-        <Grid container spacing={24}>
+        <Grid container spacing={24} alignContent={"center"}>
           <Grid item xs={12}>
-            ˇ<img src={MetaMaskLogo} />
+            <a
+              href="https://metamask.io/"
+              target="_blank"
+              className={"metamaskUrl"}
+            >
+              <img src={MetaMaskLogo} />
+            </a>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1" gutterBottom>
@@ -35,6 +38,9 @@ class OnboardingComponent extends React.Component {
               <a href="https://metamask.io/" target="_blank">
                 Metamask
               </a>
+              . This means this website has no control over your vote, it merely
+              facilitates the process. Please install Metamask, or any other
+              web3 provider to post messages to the blockchain.
             </Typography>
           </Grid>
         </Grid>
@@ -43,4 +49,4 @@ class OnboardingComponent extends React.Component {
   }
 }
 
-export default withRoot(withStyles(styles)(OnboardingComponent));
+export default withRoot(OnboardingComponent);

@@ -7,16 +7,16 @@ exports[`Section of the landing page visible if no injected web3 provider is pre
 `;
 
 exports[`Section of the landing page visible if no injected web3 provider is present:  Has an <img> tag inside it's HTML.  1`] = `
-<List
-  ordered={false}
->
-  <ListItem>
-    Item 1
-  </ListItem>
-  <ListItem>
-    Item 1
-  </ListItem>
-</List>
+<div class="onboardingDiv">
+<div class="MuiGrid-container-162 MuiGrid-spacing-xs-24-186 MuiGrid-align-content-xs-center-174">
+<div class="MuiGrid-item-163 MuiGrid-grid-xs-12-202"><a href="https://metamask.io/" target="_blank">
+<img src="/static/media/ethereum-metamask-chrome.79226bac.png"></a></div>
+<div class="MuiGrid-item-163 MuiGrid-grid-xs-12-202">
+<p class="MuiTypography-root-259 MuiTypography-body1-268 MuiTypography-gutterBottom-286">
+This application connects to the Blockchain through a Chrome Extension called <a href="https://metamask.io/" target="_blank">Metamask</a>
+. This means this website has no control over your vote, it merely facilitates the process. Please install Metamask, or any other web3 provider to post messages to the blockchain.</p>
+</div></div>
+</div>
 `;
 
 exports[`Section of the landing page visible if no injected web3 provider is present:  Is invisible if web3Injected is passed in as true 1`] = `
