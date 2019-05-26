@@ -1,25 +1,23 @@
 export default class Oireachtas {
-  constructor() {}
-
   /**
    * Get the current bills in the Dail.
    *
    * url: The formulated API request for api.oireachtas.ie
-   * callback: The function to be supplied the response.
+   *
+   * Returns a promise that resolves to the request body as text. Rejects if there is an error.
    */
-  getDailBills = async function(url: string, callback: Function) {
-    var req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (req.readyState == 4 && req.status == 200) callback(req.responseText);
-      else if (req.readyState == 4 && req.status == 500)
-        throw new Error("Error 500");
-      else if (req.readyState == 4 && req.status == 400)
-        throw new Error("Error 400");
-    };
-
-    req.open("GET", url, true);
-    req.send(null);
-  };
+  public getDailBills(url: string): Promise<any> {
+    return new Promise(function(resolve, reject) {
+      var rp = require("request-promise-native");
+      rp(url)
+        .then((htmlString: string) => {
+          resolve(JSON.parse(htmlString));
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
+  }
 
   public prepareDailBillsRequestUrl(
     bill_status = "Current",
