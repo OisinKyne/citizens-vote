@@ -54,7 +54,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { castVoteModalOpen, bills } = this.state;
+    // const { castVoteModalOpen, bills } = this.state;
 
     return (
       <div className={"centerColumn"}>
@@ -116,7 +116,7 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              No bills found. <ListComponent />
+              No bills found. <ListComponent bills={this.state.bills} />
             </Paper>
           </Grid>
         </Grid>

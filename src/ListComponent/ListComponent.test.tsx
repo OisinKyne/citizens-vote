@@ -3,10 +3,12 @@ import React from "react";
 import { shallow } from "enzyme";
 
 describe("List of Bills for voting Component", () => {
-  beforeEach(() => {});
+  let listComponent: any;
+  beforeEach(() => {
+    listComponent = shallow(<ListComponent />);
+  });
 
   it("creates a ListComponent ", async function() {
-    const listComponent = shallow(<ListComponent />);
     expect(listComponent).toBeTruthy();
   });
 
