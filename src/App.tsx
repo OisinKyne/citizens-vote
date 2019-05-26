@@ -10,52 +10,63 @@ import Bill from "./OireachtasService/interfaces/iBill";
 /**
  * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
  */
-class App extends React.Component {
-  state = {
-    castVoteModalOpen: false,
-    bills: []
-  };
-
+interface Props {}
+interface State {
+  castVoteModalOpen: boolean;
+  bills: Bill[];
+}
+class App extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    const oireachtasService = new Oireachtas();
-    const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl();
-
-    // Get Dail Bills
-    oireachtasService
-      .getDailBills(billsApiRequestUrl)
-      .then(response => {
-        // If there are bills returned in this response, save them to the state.
-        if (response.results) {
-          const newBills: Bill[] = response.results.map(function(result) {
-            return result.bill;
-          });
-          this.setState({ ...this.state, bills: newBills });
-        }
-      })
-      .catch(error => {
-        console.log(
-          "Error thrown while trying to retrieve bills from the oireachtas api. "
-        );
-        console.log(error);
-      });
+    this.state = {
+      castVoteModalOpen: false,
+      bills: []
+    };
   }
-  onComponentDidMount() {}
+  /**
+   * Instansiates an Oireachtas service object, calls the oireachtas API, then updates the Bills in state accordingly.
+   */
+  async updateBills() {
+    return new Promise(function(resolve, reject) {
+      const oireachtasService = new Oireachtas();
+      const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl();
+
+      // Get Dail Bills
+      const newBills = oireachtasService
+        .getDailBills(billsApiRequestUrl)
+        .then(response => {
+          // If there are bills returned in this response, map them to Bill Objects then return the list of them.
+          if (response.results) {
+            return response.results.map(function(result) {
+              return result.bill;
+            });
+          } else {
+            console.log(`api.oireachtas.ie returned no results for voting on.`);
+            return;
+          }
+        })
+        .catch(error => {
+          console.log(
+            "Error thrown while trying to retrieve bills from the oireachtas api. "
+          );
+          reject(error);
+        });
+      resolve(newBills);
+    });
+  }
+
   handleClose = () => {
     this.setState({
-      open: false
+      ...this.state,
+      castVoteModalOpen: false
     });
   };
 
   handleClick = () => {
-    this.setState({
-      open: true
-    });
+    this.setState({ ...this.state, castVoteModalOpen: true });
   };
 
   render() {
-    // const { castVoteModalOpen, bills } = this.state;
-
     return (
       <div className={"centerColumn"}>
         {/* Dialog action to be replaced by Cast Vote Modal */}
@@ -116,7 +127,7 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              No bills found. <ListComponent bills={this.state.bills} />
+              <ListComponent updateBills={this.updateBills} />
             </Paper>
           </Grid>
         </Grid>

@@ -1,32 +1,38 @@
 import React from "react";
 import Bill from "../OireachtasService/interfaces/iBill";
+import BillComponent from "../BillComponent/BillComponent";
 
 interface Props {
-  bills: Bill[];
+  updateBills: Function;
 }
 interface State {
   bills: Bill[];
 }
 class ListComponent extends React.Component<Props, State> {
-  state = { bills: [] };
+  // React element BillComponents outputted from a map.
+  billItems: any = [];
 
   constructor(props: any) {
     super(props);
 
-    if (props.bills == true) {
-      console.log("A bills object was passed to the list component.");
-      console.log(props.bills);
-      this.setState({ bills: props.bills });
-    }
+    this.props.updateBills().then((bills: Bill[]) => {
+      this.billItems = bills.map((bill: Bill, index: number) => (
+        <BillComponent bill={bill} key={index} />
+      ));
+      this.setState({ ...this.state, bills });
+    });
   }
 
   render() {
     return (
-      <p>
-        This is a list of bills. We have{" "}
-        {this.props.bills ? this.props.bills.length : 0} bills ready for voting
-        on.{" "}
-      </p>
+      <div>
+        <p>
+          {" "}
+          {this.billItems ? this.billItems.length : 0} upcoming bills for voting
+          on:
+        </p>
+        <div>{this.billItems}</div>
+      </div>
     );
   }
 }
