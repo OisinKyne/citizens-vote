@@ -1,13 +1,14 @@
 import ListComponent from "./ListComponent";
+import React from "react";
+import { shallow } from "enzyme";
 
 describe("List of Bills for voting Component", () => {
   beforeEach(() => {});
 
-  //   it("prepareDailBillsRequestUrl returns the default url ", async function() {
-  //     const defaultUrl =
-  //       "https://api.oireachtas.ie/v1/legislation?bill_status=Current&bill_source=Government,Private%20Member&date_start=2019-05-01&date_end=2019-05-08&limit=50&chamber_id=&lang=en";
-  //     expect(dail.prepareDailBillsRequestUrl()).toEqual(defaultUrl);
-  //   });
+  it("creates a ListComponent ", async function() {
+    const listComponent = shallow(<ListComponent />);
+    expect(listComponent).toBeTruthy();
+  });
 
   //   it("prepareDailBillsRequestUrl can return a custom URL ", async function() {
   //     const customUrl =

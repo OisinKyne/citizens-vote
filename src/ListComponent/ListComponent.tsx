@@ -9,12 +9,17 @@ class ListComponent extends React.Component {
     if (props.bills == true) {
       console.log("A bills object was passed to the list component.");
       console.log(props.bills);
-      this.state = { bills: props.bills };
+      this.setState({ bills: props.bills });
     }
   }
 
   render() {
-    return <p>This is a list component</p>;
+    return (
+      <p>
+        This is a list of bills. We have {this.state.bills.length} bills ready
+        for voting on.{" "}
+      </p>
+    );
   }
 }
 

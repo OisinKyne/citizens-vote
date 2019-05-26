@@ -116,7 +116,7 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              No bills found. <ListComponent billsList={bills} />
+              No bills found. <ListComponent />
             </Paper>
           </Grid>
         </Grid>
