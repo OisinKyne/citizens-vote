@@ -59,6 +59,11 @@ class App extends React.Component<Props, State> {
         .then(response => {
           // If there are bills returned in this response, map them to Bill Objects then return the list of them.
           if (response.results) {
+            logger.info(
+              `${
+                response.results.length
+              } results returned from api.oireachtas.ie`
+            );
             return response.results.map(function(result) {
               return result.bill;
             });

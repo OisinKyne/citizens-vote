@@ -17,16 +17,15 @@ class ListComponent extends React.Component<Props, State> {
     super(props);
 
     this.props.updateBills().then((bills: Bill[]) => {
-      if (bills.map) {
+      if (bills && bills.map) {
         this.billItems = bills.map((bill: Bill, index: number) => (
           <BillComponent bill={bill} key={index} />
         ));
       } else {
         this.billItems = [];
       }
-      if (this.state) {
-        this.setState({ ...this.state, bills });
-      }
+
+      this.setState({ ...this.state, bills });
     });
   }
 
