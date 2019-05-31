@@ -28,7 +28,7 @@ class OnboardingComponent extends React.Component {
               target="_blank"
               className={"metamaskUrl"}
             >
-              <img src={MetaMaskLogo} />
+              <img src={MetaMaskLogo} className={"fullWidthImage"} />
             </a>
           </Grid>
           <Grid item xs={12}>

@@ -30,3 +30,7 @@ code {
   padding: 20px;
   margin-top: 10px;
 }
+
+.fullWidthImage {
+  width: 100%;
+}
