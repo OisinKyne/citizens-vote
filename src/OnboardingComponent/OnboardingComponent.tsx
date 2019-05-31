@@ -21,7 +21,7 @@ class OnboardingComponent extends React.Component {
     }
     return (
       <div className={"onboardingDiv"}>
-        <Grid container spacing={24} alignContent={"center"}>
+        <Grid container spacing={3} alignContent={"center"}>
           <Grid item xs={12}>
             <a
               href="https://metamask.io/"

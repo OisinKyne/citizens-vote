@@ -82,7 +82,7 @@ class App extends React.Component<Props, State> {
           </DialogActions>
         </Dialog> */}
 
-        <Grid container spacing={24}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper className={"paper"}>
               <Typography variant="h2" gutterBottom>

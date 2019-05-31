@@ -33,7 +33,7 @@ class ListComponent extends React.Component<Props, State> {
           {this.billItems ? this.billItems.length : 0} Dáil Bills
         </Typography>
         <div>
-          <Grid container={true} direction="column" spacing={32}>
+          <Grid container={true} direction="column" spacing={3}>
             {this.billItems}
           </Grid>
         </div>
