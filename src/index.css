@@ -8,8 +8,7 @@ body {
 .centerColumn {
   margin: auto;
   max-width: 960px;
-  width: 60%;
-  min-width: 500px;
+  width: 70%;
 }
 
 code {
