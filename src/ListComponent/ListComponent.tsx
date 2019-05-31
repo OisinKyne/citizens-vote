@@ -1,6 +1,7 @@
 import React from "react";
 import Bill from "../OireachtasService/interfaces/iBill";
 import BillComponent from "../BillComponent/BillComponent";
+import { Grid, Typography } from "@material-ui/core";
 
 interface Props {
   updateBills: Function;
@@ -16,9 +17,11 @@ class ListComponent extends React.Component<Props, State> {
     super(props);
 
     this.props.updateBills().then((bills: Bill[]) => {
-      this.billItems = bills.map((bill: Bill, index: number) => (
-        <BillComponent bill={bill} key={index} />
-      ));
+      if (bills.map) {
+        this.billItems = bills.map((bill: Bill, index: number) => (
+          <BillComponent bill={bill} key={index} />
+        ));
+      }
       this.setState({ ...this.state, bills });
     });
   }
@@ -26,12 +29,14 @@ class ListComponent extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <p>
-          {" "}
-          {this.billItems ? this.billItems.length : 0} upcoming bills for voting
-          on:
-        </p>
-        <div>{this.billItems}</div>
+        <Typography variant="h4" gutterBottom>
+          {this.billItems ? this.billItems.length : 0} Dáil Bills
+        </Typography>
+        <div>
+          <Grid container={true} direction="column" spacing={32}>
+            {this.billItems}
+          </Grid>
+        </div>
       </div>
     );
   }

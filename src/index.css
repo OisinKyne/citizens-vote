@@ -25,3 +25,8 @@ code {
   width: 100%;
   margin: auto;
 }
+
+.billPaper {
+  padding: 20px;
+  margin-top: 10px;
+}

@@ -24,7 +24,7 @@ export default class Oireachtas {
   public prepareDailBillsRequestUrl(
     bill_status = "Current",
     date_start = "2019-05-01",
-    date_end = "2019-05-08",
+    date_end = "2019-06-08",
     result_limit = "50",
     chamber_id = "",
     language = "en"
