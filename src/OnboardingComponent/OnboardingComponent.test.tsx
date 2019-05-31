@@ -1,33 +1,27 @@
 import React from "react";
-import { shallow } from "enzyme";
-import OnboardingComponent from "./onboardingComponent";
+import { mount } from "enzyme";
+import OnboardingComponent from "./OnboardingComponent";
 
-describe("Section of the landing page visible if no injected web3 provider is present: ", () => {
-  beforeEach(() => {});
+describe("Onboarding Component: ", () => {
+  let onboardingComponent: any;
+  beforeEach(() => {
+    onboardingComponent = mount(<OnboardingComponent web3Injected={false} />);
+  });
 
   it("Creates a component ", async function() {
-    const props = {};
-    const onboardingComponent = shallow(<OnboardingComponent />);
     expect(onboardingComponent).toBeDefined();
   });
 
   it("Is invisible if web3Injected is passed in as true", async function() {
-    const shallowComponent = shallow(
-      <OnboardingComponent web3Injected={false} />
-    );
-    expect(shallowComponent).toMatchSnapshot();
+    const mountedComponent = mount(<OnboardingComponent web3Injected={true} />);
+    expect(mountedComponent).toMatchSnapshot();
   });
 
-  it("Has an <img> tag inside it's HTML. ", async function() {
-    const shallowComponent = shallow(<OnboardingComponent />);
-    expect(shallowComponent).toMatchSnapshot();
+  it("Is visible if web3Injected is passed in as false", async function() {
+    expect(onboardingComponent).toMatchSnapshot();
   });
 
   it("Contains an <a> tag that links to metamask. ", async function() {
-    const shallowComponent = shallow(<OnboardingComponent />);
-    console.log("Metamask shallow object:");
-    console.log(shallowComponent);
-    const metaMaskUrl = shallowComponent.find("a#metamaskUrl");
-    expect(metaMaskUrl).toEqual("metamask.com");
+    expect(onboardingComponent.find("a")).toEqual("https://metamask.com");
   });
 });

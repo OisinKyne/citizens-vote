@@ -9,7 +9,7 @@ describe("Bill Component", () => {
     const bill: Bill = {
       act: "",
       amendmentLists: [],
-      billNo: 1,
+      billNo: "",
       billType: "",
       billTypeURI: "",
       billYear: "",

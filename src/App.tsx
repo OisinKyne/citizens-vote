@@ -77,7 +77,7 @@ class App extends React.Component<Props, State> {
     });
   }
 
-  async castVote() {
+  async triggerCastVoteModal() {
     logger.info("Vote cast modal triggered. ");
   }
 

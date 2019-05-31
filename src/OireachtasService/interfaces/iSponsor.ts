@@ -2,8 +2,8 @@
 export default interface Sponsor {
   sponsor: {
     as: {
-      showAs: string;
-      uri: string;
+      showAs: string | null;
+      uri: string | null;
     };
     by: {
       showAs: string;

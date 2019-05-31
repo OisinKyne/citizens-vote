@@ -2,6 +2,7 @@ import React from "react";
 import withRoot from "../withRoot";
 import { Grid, Typography } from "@material-ui/core";
 import MetaMaskLogo from "../static/ethereum-metamask-chrome.png";
+import logger from "../logger/winston";
 
 class OnboardingComponent extends React.Component {
   state = { open: true };
@@ -10,7 +11,7 @@ class OnboardingComponent extends React.Component {
     super(props);
 
     if (props.web3Injected === true) {
-      console.log("Web3 is injected into this Onboarding object.");
+      logger.info("Web3 is injected into this Onboarding object.");
       this.state = { open: false };
     }
   }
@@ -27,7 +28,7 @@ class OnboardingComponent extends React.Component {
               href="https://metamask.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className={"metamaskUrl"}
+              className={"metaMaskUrl"}
             >
               <img
                 src={MetaMaskLogo}

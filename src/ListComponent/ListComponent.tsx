@@ -11,7 +11,7 @@ interface State {
 }
 class ListComponent extends React.Component<Props, State> {
   // React element BillComponents outputted from a map.
-  billItems: any = [];
+  public billItems: any = [];
 
   constructor(props: any) {
     super(props);
@@ -21,8 +21,12 @@ class ListComponent extends React.Component<Props, State> {
         this.billItems = bills.map((bill: Bill, index: number) => (
           <BillComponent bill={bill} key={index} />
         ));
+      } else {
+        this.billItems = [];
       }
-      this.setState({ ...this.state, bills });
+      if (this.state) {
+        this.setState({ ...this.state, bills });
+      }
     });
   }
 
