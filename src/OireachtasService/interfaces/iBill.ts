@@ -5,13 +5,13 @@ import Version from "./iVersion";
 // Object to type the JSON response from the oireachtas api with
 export default interface Bill {
   act: any;
-  amendmentLists: [];
-  billNo: number;
+  amendmentLists: any[];
+  billNo: string;
   billType: string;
   billTypeURI: string;
   billYear: string;
-  debates: [];
-  events: [];
+  debates: any[];
+  events: any[];
   lastUpdated: string;
   longTitleEn: string;
   longTitleGa: string;
