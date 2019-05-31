@@ -26,16 +26,25 @@ class OnboardingComponent extends React.Component {
             <a
               href="https://metamask.io/"
               target="_blank"
+              rel="noopener noreferrer"
               className={"metamaskUrl"}
             >
-              <img src={MetaMaskLogo} className={"fullWidthImage"} />
+              <img
+                src={MetaMaskLogo}
+                className={"fullWidthImage"}
+                alt="MetaMask Fox Logo"
+              />
             </a>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1" gutterBottom>
               This application connects to the Blockchain through a Chrome
               Extension called{" "}
-              <a href="https://metamask.io/" target="_blank">
+              <a
+                href="https://metamask.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Metamask
               </a>
               . This means this website has no control over your vote, it merely

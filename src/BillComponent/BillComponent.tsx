@@ -1,12 +1,7 @@
 import React from "react";
 import Bill from "../OireachtasService/interfaces/iBill";
 import { Paper, Grid, Typography } from "@material-ui/core";
-import {
-  DoneOutline,
-  ClearOutlined,
-  ThumbUp,
-  ThumbDown
-} from "@material-ui/icons";
+import { ThumbUp, ThumbDown } from "@material-ui/icons";
 
 interface Props {
   key: number;
