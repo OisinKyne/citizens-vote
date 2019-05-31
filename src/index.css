@@ -40,6 +40,6 @@ code {
   width: 100%;
 }
 
-.billPdfUrl {
+a {
   color: darkcyan;
 }

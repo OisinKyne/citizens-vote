@@ -4,7 +4,7 @@ import React from "react";
 import { shallow } from "enzyme";
 
 describe("Bill Component", () => {
-  let billComponent: any;
+  let emptyBillComponent: any;
   beforeEach(() => {
     const bill: Bill = {
       act: "",
@@ -60,10 +60,10 @@ describe("Bill Component", () => {
       uri: "",
       versions: []
     };
-    billComponent = shallow(<BillComponent bill={bill} key={0} />);
+    emptyBillComponent = shallow(<BillComponent bill={bill} key={0} />);
   });
 
   it("creates a ListComponent ", async function() {
-    expect(billComponent).toBeTruthy();
+    expect(emptyBillComponent).toBeTruthy();
   });
 });

@@ -29,7 +29,27 @@ class App extends React.Component<Props, State> {
   async updateBills() {
     return new Promise(function(resolve, reject) {
       const oireachtasService = new Oireachtas();
-      const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl();
+
+      // Calculate the date 7 days ago, then the date 14 days ahead of now for getting bills.
+      const date = new Date();
+      const date7DaysAgo = new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000);
+      const date7DaysAgoString = date7DaysAgo.toISOString().substring(0, 10);
+      const date14DaysFromNow = new Date(
+        date.getTime() + 14 * 24 * 60 * 60 * 1000
+      );
+      const date14DaysFromNowString = date14DaysFromNow
+        .toISOString()
+        .substring(0, 10);
+
+      console.log(``);
+      const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl(
+        "Current",
+        date7DaysAgoString,
+        date14DaysFromNowString,
+        "49",
+        "",
+        "ga"
+      );
 
       // Get Dail Bills
       const newBills = oireachtasService
