@@ -32,6 +32,8 @@ class App extends React.Component<Props, State> {
 
       // Calculate the date 7 days ago, then the date 14 days ahead of now for getting bills.
       const date = new Date();
+      const resultLimit = "50";
+      const billState = "Current";
       const date7DaysAgo = new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000);
       const date7DaysAgoString = date7DaysAgo.toISOString().substring(0, 10);
       const date14DaysFromNow = new Date(
@@ -41,12 +43,11 @@ class App extends React.Component<Props, State> {
         .toISOString()
         .substring(0, 10);
 
-      console.log(``);
       const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl(
-        "Current",
+        billState,
         date7DaysAgoString,
         date14DaysFromNowString,
-        "49",
+        resultLimit,
         "",
         "ga"
       );
