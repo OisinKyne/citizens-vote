@@ -39,3 +39,7 @@ code {
 .fullWidthImage {
   width: 100%;
 }
+
+.billPdfUrl {
+  color: darkcyan;
+}
