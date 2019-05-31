@@ -6,6 +6,7 @@ import ListComponent from "./ListComponent/ListComponent";
 import { Grid, Paper } from "@material-ui/core";
 import Oireachtas from "./OireachtasService/oireachtas";
 import Bill from "./OireachtasService/interfaces/iBill";
+import logger from "./logger/winston";
 
 /**
  * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
@@ -23,6 +24,7 @@ class App extends React.Component<Props, State> {
       bills: []
     };
   }
+
   /**
    * Instansiates an Oireachtas service object, calls the oireachtas API, then updates the Bills in state accordingly.
    */
@@ -42,7 +44,6 @@ class App extends React.Component<Props, State> {
       const date14DaysFromNowString = date14DaysFromNow
         .toISOString()
         .substring(0, 10);
-
       const billsApiRequestUrl: string = oireachtasService.prepareDailBillsRequestUrl(
         billState,
         date7DaysAgoString,
@@ -62,12 +63,12 @@ class App extends React.Component<Props, State> {
               return result.bill;
             });
           } else {
-            console.log(`api.oireachtas.ie returned no results for voting on.`);
+            logger.warn(`api.oireachtas.ie returned no results for voting on.`);
             return;
           }
         })
         .catch(error => {
-          console.log(
+          logger.error(
             "Error thrown while trying to retrieve bills from the oireachtas api. "
           );
           reject(error);
@@ -77,7 +78,7 @@ class App extends React.Component<Props, State> {
   }
 
   async castVote() {
-    console.log("Vote cast modal triggered. ");
+    logger.info("Vote cast modal triggered. ");
   }
 
   handleClose = () => {
