@@ -10,6 +10,7 @@ describe("List of Bills for voting Component", () => {
   let resolveWithBills: any;
   let resolveWithoutBills: any;
   let bill: Bill;
+  let triggerVoteCastModal: Function;
   beforeEach(() => {
     bill = defaultApiResponse.results[0].bill;
     resolveWithBills = jest.fn(() => {
@@ -18,9 +19,18 @@ describe("List of Bills for voting Component", () => {
     resolveWithoutBills = jest.fn(() => {
       return Promise.resolve([]);
     });
-    listComponent = shallow(<ListComponent updateBills={resolveWithBills} />);
+    triggerVoteCastModal = jest.fn(() => {});
+    listComponent = shallow(
+      <ListComponent
+        updateBills={resolveWithBills}
+        triggerVoteCast={triggerVoteCastModal}
+      />
+    );
     emptyListComponent = shallow(
-      <ListComponent updateBills={resolveWithoutBills} />
+      <ListComponent
+        updateBills={resolveWithoutBills}
+        triggerVoteCast={triggerVoteCastModal}
+      />
     );
   });
 
@@ -37,7 +47,12 @@ describe("List of Bills for voting Component", () => {
     const newmockfn = jest.fn(() => {
       return Promise.resolve([bill]);
     });
-    const newListComponent = mount(<ListComponent updateBills={newmockfn} />);
+    const newListComponent = mount(
+      <ListComponent
+        updateBills={newmockfn}
+        triggerVoteCast={triggerVoteCastModal}
+      />
+    );
 
     newListComponent
       .props()
@@ -55,7 +70,12 @@ describe("List of Bills for voting Component", () => {
       return Promise.resolve(null);
     });
 
-    const newListComponent = shallow(<ListComponent updateBills={newmockfn} />);
+    const newListComponent = shallow(
+      <ListComponent
+        updateBills={newmockfn}
+        triggerVoteCast={triggerVoteCastModal}
+      />
+    );
     expect(newListComponent.state("bills")).toEqual([]);
   });
 

@@ -5,6 +5,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 interface Props {
   updateBills: Function;
+  triggerVoteCast: Function;
 }
 interface State {
   bills: Bill[];
@@ -20,7 +21,11 @@ class ListComponent extends React.Component<Props, State> {
     this.props.updateBills().then((bills: Bill[]) => {
       if (bills && bills.map) {
         this.billItems = bills.map((bill: Bill, index: number) => (
-          <BillComponent bill={bill} key={index} />
+          <BillComponent
+            bill={bill}
+            key={index}
+            triggerVoteCast={this.props.triggerVoteCast}
+          />
         ));
         this.setState({ ...this.state, bills });
       }

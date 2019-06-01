@@ -7,6 +7,7 @@ import { Grid, Paper } from "@material-ui/core";
 import Oireachtas from "./OireachtasService/oireachtas";
 import Bill from "./OireachtasService/interfaces/iBill";
 import logger from "./logger/winston";
+import CastVoteModalComponent from "./CastVoteModalComponent/CastVoteModalComponent";
 
 /**
  * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
@@ -82,8 +83,10 @@ class App extends React.Component<Props, State> {
     });
   }
 
-  async triggerCastVoteModal() {
-    logger.info("Vote cast modal triggered. ");
+  async triggerCastVoteModal(bill: Bill, vote: string) {
+    logger.info("Vote cast modal triggered. Bill to vote on: ");
+    logger.info(bill);
+    logger.info(vote);
   }
 
   handleClose = () => {
@@ -100,19 +103,12 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <div className={"centerColumn"}>
-        {/* Dialog action to be replaced by Cast Vote Modal */}
-        {/* <Dialog open={open} onClose={this.handleClose}>
-          <DialogTitle>Super Secret Password</DialogTitle>
-          <DialogContent>
-            <DialogContentText>1-2-3-4-5</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={this.handleClose}>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog> */}
-
+        <CastVoteModalComponent
+          open={this.state.castVoteModalOpen}
+          handleClose={this.handleClose}
+          bill={undefined}
+          castVote={undefined}
+        />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper className={"paper"}>
@@ -158,7 +154,10 @@ class App extends React.Component<Props, State> {
           </Grid>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              <ListComponent updateBills={this.updateBills} />
+              <ListComponent
+                updateBills={this.updateBills}
+                triggerVoteCast={this.triggerCastVoteModal}
+              />
             </Paper>
           </Grid>
         </Grid>

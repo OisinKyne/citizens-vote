@@ -6,6 +6,7 @@ import { ThumbUp, ThumbDown } from "@material-ui/icons";
 interface Props {
   key: number;
   bill: Bill;
+  triggerVoteCast: Function;
 }
 interface State {
   bill: Bill;
@@ -43,11 +44,21 @@ class BillComponent extends React.Component<Props, State> {
             </Grid>
             <Grid item xs={2}>
               <Grid container justify="space-around" alignItems="center">
-                <Grid item>
+                <Grid
+                  item
+                  onClick={() =>
+                    this.props.triggerVoteCast(this.props.bill, "tá")
+                  }
+                >
                   <ThumbUp />
                   <Typography>Tá</Typography>
                 </Grid>
-                <Grid item>
+                <Grid
+                  item
+                  onClick={() =>
+                    this.props.triggerVoteCast(this.props.bill, "níl")
+                  }
+                >
                   <ThumbDown />
                   <Typography>Níl</Typography>
                 </Grid>

@@ -5,6 +5,7 @@ import { shallow } from "enzyme";
 
 describe("Bill Component", () => {
   let emptyBillComponent: any;
+  let triggerVoteCastFunction: Function;
   beforeEach(() => {
     const bill: Bill = {
       act: "",
@@ -60,7 +61,14 @@ describe("Bill Component", () => {
       uri: "",
       versions: []
     };
-    emptyBillComponent = shallow(<BillComponent bill={bill} key={0} />);
+    triggerVoteCastFunction = jest.fn(() => {});
+    emptyBillComponent = shallow(
+      <BillComponent
+        bill={bill}
+        key={0}
+        triggerVoteCast={triggerVoteCastFunction}
+      />
+    );
   });
 
   it("creates a ListComponent ", async function() {
