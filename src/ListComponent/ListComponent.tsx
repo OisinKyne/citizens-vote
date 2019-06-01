@@ -15,17 +15,15 @@ class ListComponent extends React.Component<Props, State> {
 
   constructor(props: any) {
     super(props);
+    this.state = { bills: [] };
 
     this.props.updateBills().then((bills: Bill[]) => {
       if (bills && bills.map) {
         this.billItems = bills.map((bill: Bill, index: number) => (
           <BillComponent bill={bill} key={index} />
         ));
-      } else {
-        this.billItems = [];
+        this.setState({ ...this.state, bills });
       }
-
-      this.setState({ ...this.state, bills });
     });
   }
 
@@ -33,7 +31,7 @@ class ListComponent extends React.Component<Props, State> {
     return (
       <div>
         <Typography variant="h4" gutterBottom>
-          {this.billItems ? this.billItems.length : 0} Dáil Bills
+          {this.billItems.length} Dáil Bills
         </Typography>
         <div>
           <Grid container={true} direction="column" spacing={3}>

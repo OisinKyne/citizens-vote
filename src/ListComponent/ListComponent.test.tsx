@@ -6,13 +6,22 @@ import defaultApiResponse from "../OireachtasService/defaultApiResponse.json";
 
 describe("List of Bills for voting Component", () => {
   let listComponent: any;
+  let emptyListComponent: any;
+  let resolveWithBills: any;
+  let resolveWithoutBills: any;
   let bill: Bill;
   beforeEach(() => {
     bill = defaultApiResponse.results[0].bill;
-    const mockfn = jest.fn(() => {
+    resolveWithBills = jest.fn(() => {
       return Promise.resolve([bill]);
     });
-    listComponent = shallow(<ListComponent updateBills={mockfn} />);
+    resolveWithoutBills = jest.fn(() => {
+      return Promise.resolve([]);
+    });
+    listComponent = shallow(<ListComponent updateBills={resolveWithBills} />);
+    emptyListComponent = shallow(
+      <ListComponent updateBills={resolveWithoutBills} />
+    );
   });
 
   it("creates a ListComponent ", async function() {
@@ -24,7 +33,7 @@ describe("List of Bills for voting Component", () => {
   });
 
   it("if bills.map does exist, this.state.bills is truthy  ", async function() {
-    // Return an empty array of bills in 'updateBills' async function.
+    // Return an array of bills in 'updateBills' async function.
     const newmockfn = jest.fn(() => {
       return Promise.resolve([bill]);
     });
@@ -41,12 +50,22 @@ describe("List of Bills for voting Component", () => {
       });
   });
 
-  // it("if bills.map does not exist, listcomponent.BillItems is an empty array  ", async function() {
-  //   // Return an empty array of bills in 'updateBills' async function.
-  //   const newmockfn = jest.fn(() => {
-  //     return Promise.resolve(null);
-  //   });
-  //   const newListComponent = new ListComponent({ updateBills: newmockfn });
-  //   expect(newListComponent.billItems).toEqual([]);
-  // });
+  it("if this.props.updateBills() returns something that isn't truthy and doesnt have a .map() function; the state is unchanged  ", async function() {
+    const newmockfn = jest.fn(() => {
+      return Promise.resolve(null);
+    });
+
+    const newListComponent = shallow(<ListComponent updateBills={newmockfn} />);
+    expect(newListComponent.state("bills")).toEqual([]);
+  });
+
+  it("if there are no bills. Text says '0 Dáil Bills'  ", async function() {
+    const text = emptyListComponent.text();
+    expect(text).toEqual("0 Dáil Bills");
+  });
+
+  it("if there are bills. Text says '1 Dáil Bills<BillComponent />'  ", async function() {
+    const text = listComponent.text();
+    expect(text).toEqual("1 Dáil Bills<BillComponent />");
+  });
 });
