@@ -23,11 +23,13 @@ interface Props {
   inFavour: boolean;
   // Function to close modal without casting vote
   handleClose: any;
-  // Function to cast vote via web3
+  // Function to cast vote
   castVote: any;
 }
 interface State {
   inFavour: boolean;
+  name: string;
+  email: string;
 }
 /**
  * Component to present a user with a summary of their vote
@@ -35,7 +37,7 @@ interface State {
 class CastVoteModalComponent extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    this.state = { inFavour: this.props.inFavour };
+    this.state = { inFavour: this.props.inFavour, name: "", email: "" };
   }
 
   /**
@@ -97,6 +99,10 @@ class CastVoteModalComponent extends React.Component<Props, State> {
             <TextField
               margin="dense"
               id="name"
+              value={this.state.name}
+              onChange={(e: any) => {
+                this.setState({ ...this.state, name: e.target.value });
+              }}
               label="Name"
               type="text"
               fullWidth
@@ -104,6 +110,10 @@ class CastVoteModalComponent extends React.Component<Props, State> {
             <TextField
               margin="dense"
               id="email"
+              value={this.state.email}
+              onChange={(e: any) => {
+                this.setState({ ...this.state, email: e.target.value });
+              }}
               label="Email"
               type="email"
               fullWidth
@@ -120,7 +130,12 @@ class CastVoteModalComponent extends React.Component<Props, State> {
             <Button
               variant={"contained"}
               onClick={() => {
-                this.props.castVote(this.props.bill, this.state.inFavour, null);
+                this.props.castVote(
+                  this.props.bill,
+                  this.state.inFavour,
+                  this.state.name,
+                  this.state.email
+                );
               }}
               color="primary"
             >

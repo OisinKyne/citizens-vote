@@ -109,10 +109,13 @@ class App extends React.Component<Props, State> {
   };
 
   // Function to cast a vote to the blockchain.
-  castVote = (bill: Bill, inFavour: boolean, web3: any) => {
+  castVote = (bill: Bill, inFavour: boolean, name?: string, email?: string) => {
     logger.info(
-      `Casting Vote. BillTitle: ${bill.shortTitleEn}, inFavour: ${inFavour}`
+      `Casting Vote. BillTitle: ${
+        bill.shortTitleEn
+      }, inFavour: ${inFavour}, name:${name}, email: ${email}`
     );
+
     this.setState({
       ...this.state,
       castVoteModalOpen: false
