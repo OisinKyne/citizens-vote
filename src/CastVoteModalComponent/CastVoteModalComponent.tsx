@@ -13,12 +13,7 @@ import {
   Tab
 } from "@material-ui/core";
 import logger from "../logger/winston";
-import {
-  HowToVoteOutlined,
-  ThumbDown,
-  ThumbUp,
-  SkipPreviousOutlined
-} from "@material-ui/icons";
+import { HowToVoteOutlined, ThumbDown, ThumbUp } from "@material-ui/icons";
 interface Props {
   open: boolean;
   handleClose: any;
@@ -37,37 +32,17 @@ class CastVoteModalComponent extends React.Component<Props, State> {
     super(props);
     this.state = { inFavour: this.props.inFavour };
   }
-  componentDidUpdate() {
-    logger.info(
-      `CastVoteModal Updated. this.props.inFavour: ${
-        this.props.inFavour
-      }, this.state.inFavour: ${this.state.inFavour}. Open boolean: ${
-        this.props.open
-      }`
-    );
-    if (this.props.open && this.props.inFavour !== this.state.inFavour) {
-      logger.warn("We have a mismatch, should we override the loaded state? ");
-    }
-    if (!this.props.open) {
-      logger.info(
-        `Modal closed, use props to dictate state.inFavour. this.state.infavour (${
-          this.state.inFavour
-        }). this.props.infavour (${this.props.inFavour})`
-      );
-    } else {
-      logger.info(
-        `Modal open. consider this.state.infavour (${
-          this.state.inFavour
-        })as the truth. `
-      );
-    }
+
+  /**
+   * Function called when the Dialog component fires onEnter callback.
+   * Reads props.inFavour and overrides state.inFavour if necessary.
+   */
+  setTaNilTab() {
+    this.setState({ ...this.state, inFavour: this.props.inFavour });
   }
   render() {
-    logger.info(
-      `CastVoteModal. Launched modal voting in favour: ${this.props.inFavour}`
-    );
     if (!this.props.bill) {
-      logger.warn(
+      logger.info(
         "Not rendering without a bill object passed as a prop to CastVoteModal. "
       );
       return <div />;
@@ -75,6 +50,7 @@ class CastVoteModalComponent extends React.Component<Props, State> {
       return (
         <Dialog
           open={this.props.open}
+          onEnter={this.setTaNilTab.bind(this)}
           onClose={this.props.handleClose}
           aria-labelledby="form-dialog-title"
         >
@@ -82,7 +58,7 @@ class CastVoteModalComponent extends React.Component<Props, State> {
             {this.props.bill.shortTitleEn}
           </DialogTitle>
           <DialogContent>
-            <Paper square>
+            <Paper square className={"voteModalTabPaperComponent"}>
               <Tabs
                 value={this.state.inFavour ? 0 : 1}
                 onChange={(change: any, newValue: number) => {
@@ -109,10 +85,10 @@ class CastVoteModalComponent extends React.Component<Props, State> {
                 <Tab icon={<ThumbDown />} label="Níl" />
               </Tabs>
             </Paper>
-            <DialogContentText>
+            {/* <DialogContentText>
               You are going to cast your vote{" "}
               {this.state.inFavour ? "for" : "against"} this measure.
-            </DialogContentText>
+            </DialogContentText> */}
             <DialogContentText>
               You have the option to add your name or your email to your vote,
               but keep in mind this is being cast forever to the Blockchain.

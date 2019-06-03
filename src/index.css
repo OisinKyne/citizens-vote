@@ -47,3 +47,7 @@ a {
 .metaMaskUrl {
   color: darkcyan;
 }
+
+.voteModalTabPaperComponent {
+  margin-bottom: 5%;
+}
