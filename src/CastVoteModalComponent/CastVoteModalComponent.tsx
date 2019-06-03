@@ -15,10 +15,15 @@ import {
 import logger from "../logger/winston";
 import { HowToVoteOutlined, ThumbDown, ThumbUp } from "@material-ui/icons";
 interface Props {
+  // Whether dialog should render
   open: boolean;
-  handleClose: any;
+  // Bill to vote on
   bill: Bill | undefined;
+  // Whether this modal should launch leaning infavour/against bill
   inFavour: boolean;
+  // Function to close modal without casting vote
+  handleClose: any;
+  // Function to cast vote via web3
   castVote: any;
 }
 interface State {
@@ -85,10 +90,6 @@ class CastVoteModalComponent extends React.Component<Props, State> {
                 <Tab icon={<ThumbDown />} label="Níl" />
               </Tabs>
             </Paper>
-            {/* <DialogContentText>
-              You are going to cast your vote{" "}
-              {this.state.inFavour ? "for" : "against"} this measure.
-            </DialogContentText> */}
             <DialogContentText>
               You have the option to add your name or your email to your vote,
               but keep in mind this is being cast forever to the Blockchain.
@@ -111,15 +112,17 @@ class CastVoteModalComponent extends React.Component<Props, State> {
           <DialogActions>
             <Button
               onClick={this.props.handleClose}
-              color="secondary"
+              color="primary"
               variant={"contained"}
             >
               Cancel
             </Button>
             <Button
               variant={"contained"}
-              onClick={this.props.handleClose}
-              color="secondary"
+              onClick={() => {
+                this.props.castVote(this.props.bill, this.state.inFavour, null);
+              }}
+              color="primary"
             >
               Vote
               <HowToVoteOutlined />

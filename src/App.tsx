@@ -101,7 +101,18 @@ class App extends React.Component<Props, State> {
     });
   }
 
-  handleClose = () => {
+  handleClose = (event: any, reason: any) => {
+    this.setState({
+      ...this.state,
+      castVoteModalOpen: false
+    });
+  };
+
+  // Function to cast a vote to the blockchain.
+  castVote = (bill: Bill, inFavour: boolean, web3: any) => {
+    logger.info(
+      `Casting Vote. BillTitle: ${bill.shortTitleEn}, inFavour: ${inFavour}`
+    );
     this.setState({
       ...this.state,
       castVoteModalOpen: false
@@ -120,7 +131,7 @@ class App extends React.Component<Props, State> {
           handleClose={this.handleClose}
           bill={this.state.billToVoteOn}
           inFavour={this.state.inFavour}
-          castVote={undefined}
+          castVote={this.castVote}
         />
         <Grid container spacing={2}>
           <Grid item xs={12}>
