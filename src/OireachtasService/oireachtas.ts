@@ -1,4 +1,5 @@
 import APIResponse from "./interfaces/iAPIResponse";
+import defaultApiResponse from "./defaultApiResponse.json";
 
 export default class Oireachtas {
   /**
@@ -10,14 +11,17 @@ export default class Oireachtas {
    */
   public getDailBills(url: string): Promise<APIResponse> {
     return new Promise(function(resolve, reject) {
-      var rp = require("request-promise-native");
-      rp(url)
-        .then((htmlString: string) => {
-          resolve(JSON.parse(htmlString));
-        })
-        .catch((error: any) => {
-          reject(error);
-        });
+      // var rp = require("request-promise-native");
+      // rp(url)
+      //   .then((htmlString: string) => {
+      //     resolve(JSON.parse(htmlString));
+      //   })
+      //   .catch((error: any) => {
+      //     reject(error);
+      //   });
+
+      //No internet workaround.
+      resolve(defaultApiResponse);
     });
   }
 

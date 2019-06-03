@@ -1,6 +1,7 @@
 import Oireachtas from "./oireachtas";
 import dummyResponseJson from "./defaultApiResponse.json";
 import APIResponse from "./interfaces/iAPIResponse";
+import logger from "../logger/winston";
 
 describe("Oireachtas API object", () => {
   let dail: Oireachtas;
@@ -27,9 +28,6 @@ describe("Oireachtas API object", () => {
   beforeEach(() => {
     dail = new Oireachtas();
     url = dail.prepareDailBillsRequestUrl();
-    callback = function(response: any) {
-      console.log("Callback was called. ");
-    };
   });
 
   it("prepareDailBillsRequestUrl returns the default url ", async function() {
@@ -128,6 +126,7 @@ describe("Oireachtas API object", () => {
         return expect(isValid).toBeTruthy();
       })
       .catch(res => {
+        logger.error(res);
         fail(
           "Unexpected catch casting a live getDailBills response to a typed object"
         );

@@ -15,6 +15,14 @@ interface State {
  * Component to render a passed Bill interface conforming JSON object to a React Component with buttons for voting for and against bills.
  */
 class BillComponent extends React.Component<Props, State> {
+  startCastVoteFor(e: any) {
+    this.props.triggerVoteCast(this.props.bill, true);
+  }
+
+  startCastVoteAgainst(e: any) {
+    this.props.triggerVoteCast(this.props.bill, false);
+  }
+
   render() {
     let billPdfUrl = "/";
     if (this.props.bill.versions && this.props.bill.versions.length >= 1) {
@@ -44,21 +52,11 @@ class BillComponent extends React.Component<Props, State> {
             </Grid>
             <Grid item xs={2}>
               <Grid container justify="space-around" alignItems="center">
-                <Grid
-                  item
-                  onClick={() =>
-                    this.props.triggerVoteCast(this.props.bill, "tá")
-                  }
-                >
+                <Grid item onClick={this.startCastVoteFor.bind(this)}>
                   <ThumbUp />
                   <Typography>Tá</Typography>
                 </Grid>
-                <Grid
-                  item
-                  onClick={() =>
-                    this.props.triggerVoteCast(this.props.bill, "níl")
-                  }
-                >
+                <Grid item onClick={this.startCastVoteAgainst.bind(this)}>
                   <ThumbDown />
                   <Typography>Níl</Typography>
                 </Grid>

@@ -16,13 +16,17 @@ interface Props {}
 interface State {
   castVoteModalOpen: boolean;
   bills: Bill[];
+  billToVoteOn: Bill | undefined;
+  inFavour: boolean;
 }
 class App extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
       castVoteModalOpen: false,
-      bills: []
+      bills: [],
+      billToVoteOn: undefined,
+      inFavour: false
     };
   }
 
@@ -83,10 +87,18 @@ class App extends React.Component<Props, State> {
     });
   }
 
-  async triggerCastVoteModal(bill: Bill, vote: string) {
-    logger.info("Vote cast modal triggered. Bill to vote on: ");
-    logger.info(bill);
-    logger.info(vote);
+  /**
+   * This function is passed down to a Bill Component. When called it is passed the Bill interface and a boolean, true meaning voting in favour
+   * @param bill
+   * @param vote
+   */
+  triggerCastVoteModal(bill: Bill, vote: boolean) {
+    this.setState({
+      ...this.state,
+      castVoteModalOpen: true,
+      billToVoteOn: bill,
+      inFavour: vote
+    });
   }
 
   handleClose = () => {
@@ -106,7 +118,8 @@ class App extends React.Component<Props, State> {
         <CastVoteModalComponent
           open={this.state.castVoteModalOpen}
           handleClose={this.handleClose}
-          bill={undefined}
+          bill={this.state.billToVoteOn}
+          inFavour={this.state.inFavour}
           castVote={undefined}
         />
         <Grid container spacing={2}>
@@ -156,7 +169,7 @@ class App extends React.Component<Props, State> {
             <Paper className={"paper"}>
               <ListComponent
                 updateBills={this.updateBills}
-                triggerVoteCast={this.triggerCastVoteModal}
+                triggerVoteCast={this.triggerCastVoteModal.bind(this)}
               />
             </Paper>
           </Grid>
