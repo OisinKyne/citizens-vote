@@ -187,6 +187,22 @@ class App extends React.Component<Props, State> {
               />
             </Paper>
           </Grid>
+
+          <Grid item xs={12}>
+            {/* Identifying myself and donation address */}
+            <Paper className={"paper"}>
+              <Typography variant="caption">
+                Built by Oisín Kyne. To donate some Ether:{" "}
+                <a
+                  href="https://etherscan.io/address/0xa338096d43efFc151E7e89519b524CA5a7E5626f"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  oisinkyne.eth
+                </a>
+              </Typography>
+            </Paper>
+          </Grid>
         </Grid>
       </div>
     );
