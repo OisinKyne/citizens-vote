@@ -69,7 +69,7 @@ describe("Oireachtas API object", () => {
   });
 
   it("has a function called getDailBills that accepts a URL and rejects if the request fails", async function() {
-    const mockfn = jest.fn(() => {
+    const mockfn = jest.fn(async () => {
       return Promise.reject(
         "[RequestError: Error: getaddrinfo ENOTFOUND bad-url-name bad-url-name:80]"
       );
@@ -77,14 +77,18 @@ describe("Oireachtas API object", () => {
     dail.getDailBills = mockfn;
 
     const badUrl = "http://bad-url-name";
-    const badResponse = dail.getDailBills(badUrl);
-    expect(badResponse).rejects.toEqual(
-      "[RequestError: Error: getaddrinfo ENOTFOUND bad-url-name bad-url-name:80]"
-    );
+    dail
+      .getDailBills(badUrl)
+      .then(res => fail("This getDailBills() call was meant to throw "))
+      .catch(rej => {
+        expect(rej).toEqual(
+          "[RequestError: Error: getaddrinfo ENOTFOUND bad-url-name bad-url-name:80]"
+        );
+      });
   });
 
   it("can cast a mocked API response to our Bill type without error ", async function() {
-    const mockfn = jest.fn(() => {
+    const mockfn = jest.fn(async () => {
       return Promise.resolve(dummyResponseJson);
     });
     dail.getDailBills = mockfn;
@@ -103,7 +107,7 @@ describe("Oireachtas API object", () => {
   });
 
   it("fails to cast a bad mocked API response to our Bill type ", async function() {
-    const mockfn = jest.fn(() => {
+    const mockfn = jest.fn(async () => {
       return Promise.resolve("This is not of format apiresponse");
     });
     dail.getDailBills = mockfn;

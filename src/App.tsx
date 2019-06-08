@@ -8,6 +8,7 @@ import Oireachtas from "./OireachtasService/oireachtas";
 import Bill from "./OireachtasService/interfaces/iBill";
 import logger from "./logger/winston";
 import CastVoteModalComponent from "./CastVoteModalComponent/CastVoteModalComponent";
+import BlockchainService from "./BlockchainService/blockchainService";
 
 /**
  * Main page. Outlines what this website is for and contains the sub modules for voting and onboarding.
@@ -115,6 +116,17 @@ class App extends React.Component<Props, State> {
         bill.shortTitleEn
       }, inFavour: ${inFavour}, name:${name}, email: ${email}`
     );
+    const blockchainService = new BlockchainService();
+    blockchainService
+      .getWeb3()
+      .then(web3 => {
+        logger.info("Web3 ready for voting with. ");
+        console.log(web3);
+      })
+      .catch(err => {
+        logger.error("Error thrown getting web3 and sending a transaction. ");
+        logger.error(err);
+      });
 
     this.setState({
       ...this.state,
