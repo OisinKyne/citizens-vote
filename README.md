@@ -1,44 +1,19 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Citizens Vote
 
-## Available Scripts
+Casting Dáil Votes to the Ethereum Blockchain
 
-In the project directory, you can run:
+## What is it?
 
-### `npm start`
+This is a lightweight dApp that makes use of the [Oireachtas Open Data API](https://api.oireachtas.ie/) to allow regular people that might be considering a run for elected office at some point in their future to build up a Voting Record.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Blockchain is the technology that underpins cryptocurrencies like Bitcoin and Ethereum. The long and short of it is that Blockchain technology gives internet users a way to store permanent, unmodifiable data to the public internet, that no Facebook nor Google, nor any individual or State can change or censor on your behalf. The technology is in it's infancy but it is revolutionising how the public holds their Government's and elected officials accountable to the rule of Law.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## What is it good for?
 
-### `npm test`
+I see this app as good for people who are into Irish Politics, people who are looking to learn more about what Irish Politicians do, or would consider a run for public office at some point in their lives. Running for office as a first time candidate is difficult as you have to convince your potential constituents that you are who you say you are, and that you'll vote how you say you vote. What better a way is there for you to put your money where your mouth is other than casting your vote on Dáil Bills permanently in plain text to the Ethereum Blockchain?
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you vote dilligently on Dáil bills before you run for office, you will be able to prove to your voters that you're not just promising them nice things during election time, you can go back in history and prove your track record on an issue as confidently as if you had published your vote to the classifieds of the New York Times. Sure, most people haven't heard of Blockchain yet, and might not get why casting your vote to a blockchain means you couldn't have changed it since it was cast. Most people didn't understand what all the fuss was about about the internet in the 90's though either. Does most of the world know what the internet is now, 20+ years later? They sure do.
 
-### `npm run build`
+## What does this change?
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Blockchain technology has allowed us to close the trust gap between elected officials and first time candidates, by giving first time candidates a way to build a track record out of office. I hope this will improve the standard of political debate in this country, especially during election time.
