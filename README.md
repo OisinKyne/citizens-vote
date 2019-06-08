@@ -6,7 +6,7 @@ Casting Dáil Votes to the Ethereum Blockchain
 
 This is a lightweight dApp that makes use of the [Oireachtas Open Data API](https://api.oireachtas.ie/) to allow regular people that might be considering a run for elected office at some point in their future to build up a Voting Record.
 
-Blockchain is the technology that underpins cryptocurrencies like Bitcoin and Ethereum. The long and short of it is that Blockchain technology gives internet users a way to store permanent, unmodifiable data to the public internet, that no Facebook nor Google, nor any individual or State can change or censor on your behalf. The technology is in it's infancy but it is revolutionising how the public holds their Government's and elected officials accountable to the rule of Law.
+Blockchain is the technology that underpins cryptocurrencies like Bitcoin and Ethereum. The long and short of it is that Blockchain technology gives internet users a way to store permanent, unmodifiable data to the public internet, that Facebook nor Google, nor any individual or State can change or censor on your behalf. The technology is in it's infancy but it is revolutionising how the public holds their Government's and elected officials accountable to the rule of Law.
 
 ## What is it good for?
 
@@ -17,3 +17,7 @@ If you vote dilligently on Dáil bills before you run for office, you will be ab
 ## What does this change?
 
 Blockchain technology has allowed us to close the trust gap between elected officials and first time candidates, by giving first time candidates a way to build a track record out of office. I hope this will improve the standard of political debate in this country, especially during election time.
+
+## How do I use this app?
+
+To use this app, you need to use either Chrome or Firefox on a desktop. You need to install [MetaMask](https://metamask.io/) as a browser extension. Once you have MetaMask installed, you should create an Ethereum address to use. This address will be what identifies your votes to anyone you want to prove them to. Finally, to cast votes you need to fund your address with some ether to pay transaction fees. At this point in time,transaction fees are about €0.20 per vote, but that varies depending on the time of day and traffic on the network.
