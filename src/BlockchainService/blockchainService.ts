@@ -1,5 +1,8 @@
 import Web3 from "web3";
+import React from "react";
 import logger from "../logger/winston";
+import voteContractAbi from "../Contracts/NationalVote.abi.json";
+import contractAddresses from "../Contracts/ContractAddresses.json";
 
 // Stop typescript complaining about the window definition not having ethereum or web3 in it
 declare let window: any; // <--- Declare it like this
@@ -9,7 +12,18 @@ declare let window: any; // <--- Declare it like this
  *
  *
  */
-export default class BlockchainService {
+interface Props {}
+interface State {
+  web3: any;
+}
+/**
+ * Component to render a passed Bill interface conforming JSON object to a React Component with buttons for voting for and against bills.
+ */
+export default class BlockchainService extends React.Component<Props, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = { web3: this.getWeb3() };
+  }
   // Function to return the injected web3 object supplied by Metamask.
   public async getWeb3(): Promise<Web3> {
     return new Promise(async function(resolve, reject) {
@@ -19,8 +33,9 @@ export default class BlockchainService {
         window.web3 = new Web3(window.ethereum);
         try {
           // Request account access if needed
-          await window.ethereum.enable();
-          // Acccounts now exposed
+          const response = await window.ethereum.enable();
+          if (response.length >= 1)
+            window.web3.eth.defaultAccount = response[0];
           resolve(window.web3);
         } catch (error) {
           logger.error(
@@ -37,8 +52,61 @@ export default class BlockchainService {
       }
       // Non-dapp browsers...
       else {
-        logger.info("No web3 provider detected");
+        logger.warn("No web3 provider detected");
         reject("No web3 provider detected");
+      }
+    });
+  }
+
+  // Function that looks up ContractAddresses.json and returns the address of the vote contract on that network.
+  public getVoteContractAddress(networkName: "main" | "rinkeby"): string {
+    if (networkName === "rinkeby") return contractAddresses.rinkeby.address;
+    else if (networkName === "main") {
+      return contractAddresses.main.address;
+    } else {
+      throw new Error("Unknown ethereum network name");
+    }
+  }
+
+  public async castVote(billUri: string, inFavour: boolean) {
+    const web3 = await this.state.web3;
+    const networkName = await web3.eth.net.getNetworkType();
+    const contractAddress = this.getVoteContractAddress(networkName);
+
+    if (!web3.eth.defaultAccount) {
+      // There is no default account set. For now just fail as it is likely something has gone wrong.
+      throw new Error(
+        "No web3.eth.defaultAccount available. Something went wrong. "
+      );
+    }
+
+    return new Promise(function(resolve, reject) {
+      // Rinkeby contract address 0xc9f0ceebfa12ec7828245375cfb634bd387bbee7
+      try {
+        if (web3) {
+          const voteContract = new web3.eth.Contract(
+            voteContractAbi,
+            contractAddress,
+            {
+              defaultGasPrice: 20000000000
+            }
+          );
+
+          voteContract.methods
+            .vote(billUri, inFavour)
+            .send({ from: web3.eth.defaultAccount })
+            .then((receipt: any) => {
+              resolve(receipt);
+            })
+            .catch((err: any) => {
+              reject(err);
+            });
+        }
+      } catch (error) {
+        logger.error(
+          "Something went wrong casting a vote. Rejecting with the error. "
+        );
+        reject(error);
       }
     });
   }

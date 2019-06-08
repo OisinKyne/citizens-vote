@@ -1,0 +1,14 @@
+{
+  "main": {
+    "id": 1,
+    "address": "0xaa8a2ceb04f4ea6fbf9afc6bc542cc432cef88d3"
+  },
+  "rinkeby": {
+    "id": 4,
+    "address": "0xc9f0ceebfa12ec7828245375cfb634bd387bbee7"
+  },
+  "private": {
+    "id": 99999,
+    "address": "0x0000000000000000000000000000000000000000"
+  }
+}

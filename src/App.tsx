@@ -116,15 +116,17 @@ class App extends React.Component<Props, State> {
         bill.shortTitleEn
       }, inFavour: ${inFavour}, name:${name}, email: ${email}`
     );
-    const blockchainService = new BlockchainService();
+    const blockchainService = new BlockchainService(null);
     blockchainService
-      .getWeb3()
-      .then(web3 => {
-        logger.info("Web3 ready for voting with. ");
-        console.log(web3);
+      .castVote(bill.uri, inFavour)
+      .then(castVoteResponse => {
+        logger.info("CastVote() resolved to:  ");
+        console.log(castVoteResponse);
       })
       .catch(err => {
-        logger.error("Error thrown getting web3 and sending a transaction. ");
+        logger.error(
+          "Error thrown getting web3 and sending a vote transaction. "
+        );
         logger.error(err);
       });
 
