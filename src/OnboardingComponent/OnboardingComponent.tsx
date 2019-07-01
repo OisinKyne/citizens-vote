@@ -22,7 +22,13 @@ class OnboardingComponent extends React.Component {
     }
     return (
       <div className={"onboardingDiv"}>
-        <Grid container spacing={3} alignContent={"center"}>
+        <Grid
+          container
+          direction={"column"}
+          spacing={3}
+          alignContent={"center"}
+          alignItems={"center"}
+        >
           <Grid item xs={12}>
             <a
               href="https://metamask.io/"
@@ -39,18 +45,16 @@ class OnboardingComponent extends React.Component {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1" gutterBottom>
-              This application connects to the Blockchain through a Chrome
-              Extension called{" "}
+              You need to install{" "}
               <a
                 href="https://metamask.io/"
                 target="_blank"
                 rel="noopener noreferrer"
+                className={"metaMaskUrl"}
               >
-                Metamask
-              </a>
-              . This means this website has no control over your vote, it merely
-              facilitates the process. Please install Metamask, or any other
-              web3 provider to post messages to the blockchain.
+                MetaMask
+              </a>{" "}
+              to post messages to the Ethereum blockchain.
             </Typography>
           </Grid>
         </Grid>

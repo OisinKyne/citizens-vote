@@ -22,6 +22,17 @@ describe("Onboarding Component: ", () => {
   });
 
   it("Contains an <a> tag that links to metamask. ", async function() {
-    expect(onboardingComponent.find("a")).toEqual("https://metamask.com");
+    expect(
+      onboardingComponent.containsMatchingElement(
+        <a
+          href="https://metamask.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={"metaMaskUrl"}
+        >
+          MetaMask
+        </a>
+      )
+    ).toBeTruthy();
   });
 });

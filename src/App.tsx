@@ -136,6 +136,10 @@ class App extends React.Component<Props, State> {
     });
   };
 
+  isWeb3User = (): boolean => {
+    return BlockchainService.isWeb3Injected();
+  };
+
   handleClick = () => {
     this.setState({ ...this.state, castVoteModalOpen: true });
   };
@@ -153,8 +157,8 @@ class App extends React.Component<Props, State> {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper className={"paper"}>
-              <Typography variant="h2" gutterBottom>
-                Data Driven Democracy in Ireland
+              <Typography variant="h3" gutterBottom>
+                Have your say on Bills in the Oireachtas
               </Typography>
               <Typography variant="body1" gutterBottom>
                 Through the use of the{" "}
@@ -178,21 +182,18 @@ class App extends React.Component<Props, State> {
                 how the incumbent voted in the Dáil. Rather than relying on what
                 candidates say they are going to do during the election cycle.
               </Typography>
-              <Typography variant="h6" gutterBottom>
-                It's time for informed voters to stop looking at what elected
-                officials say, and to start looking at how they are voting. This
-                project isn't a fully fledged application to do all that this
-                entails. But it is a step in the right direction, helping
-                Ireland take steps to becoming a more accountable and
-                transparent Democracy.
-              </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12}>
-            <Paper className={"paper"}>
-              <OnboardingComponent web3Injected={false} />
-            </Paper>
-          </Grid>
+          {this.isWeb3User() ? (
+            <div />
+          ) : (
+            <Grid item xs={12}>
+              <Paper className={"paper"}>
+                <OnboardingComponent web3Injected={this.isWeb3User()} />
+              </Paper>
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <Paper className={"paper"}>
               <ListComponent

@@ -87,15 +87,15 @@ exports[`Onboarding Component:  Is invisible if web3Injected is passed in as tru
           },
           "primary": Object {
             "contrastText": "#fff",
-            "dark": "#7b1fa2",
-            "light": "#ba68c8",
-            "main": "#9c27b0",
+            "dark": "#006064",
+            "light": "#00bcd4",
+            "main": "#0097a7",
           },
           "secondary": Object {
-            "contrastText": "rgba(0, 0, 0, 0.87)",
-            "dark": "#388e3c",
-            "light": "#81c784",
-            "main": "#4caf50",
+            "contrastText": "#fff",
+            "dark": "#455a64",
+            "light": "#90a4ae",
+            "main": "#607d8b",
           },
           "text": Object {
             "disabled": "rgba(0, 0, 0, 0.38)",
@@ -367,15 +367,15 @@ exports[`Onboarding Component:  Is visible if web3Injected is passed in as false
           },
           "primary": Object {
             "contrastText": "#fff",
-            "dark": "#7b1fa2",
-            "light": "#ba68c8",
-            "main": "#9c27b0",
+            "dark": "#006064",
+            "light": "#00bcd4",
+            "main": "#0097a7",
           },
           "secondary": Object {
-            "contrastText": "rgba(0, 0, 0, 0.87)",
-            "dark": "#388e3c",
-            "light": "#81c784",
-            "main": "#4caf50",
+            "contrastText": "#fff",
+            "dark": "#455a64",
+            "light": "#90a4ae",
+            "main": "#607d8b",
           },
           "text": Object {
             "disabled": "rgba(0, 0, 0, 0.38)",
@@ -561,11 +561,14 @@ exports[`Onboarding Component:  Is visible if web3Injected is passed in as false
       >
         <WithStyles(ForwardRef(Grid))
           alignContent="center"
+          alignItems="center"
           container={true}
+          direction="column"
           spacing={3}
         >
           <ForwardRef(Grid)
             alignContent="center"
+            alignItems="center"
             classes={
               Object {
                 "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -674,10 +677,11 @@ exports[`Onboarding Component:  Is visible if web3Injected is passed in as false
               }
             }
             container={true}
+            direction="column"
             spacing={3}
           >
             <div
-              className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-content-xs-center"
+              className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-align-content-xs-center"
             >
               <WithStyles(ForwardRef(Grid))
                 item={true}
@@ -1052,15 +1056,15 @@ exports[`Onboarding Component:  Is visible if web3Injected is passed in as false
                               },
                               "primary": Object {
                                 "contrastText": "#fff",
-                                "dark": "#7b1fa2",
-                                "light": "#ba68c8",
-                                "main": "#9c27b0",
+                                "dark": "#006064",
+                                "light": "#00bcd4",
+                                "main": "#0097a7",
                               },
                               "secondary": Object {
-                                "contrastText": "rgba(0, 0, 0, 0.87)",
-                                "dark": "#388e3c",
-                                "light": "#81c784",
-                                "main": "#4caf50",
+                                "contrastText": "#fff",
+                                "dark": "#455a64",
+                                "light": "#90a4ae",
+                                "main": "#607d8b",
                               },
                               "text": Object {
                                 "disabled": "rgba(0, 0, 0, 0.38)",
@@ -1241,16 +1245,18 @@ exports[`Onboarding Component:  Is visible if web3Injected is passed in as false
                         <p
                           className="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom"
                         >
-                          This application connects to the Blockchain through a Chrome Extension called
+                          You need to install
                            
                           <a
+                            className="metaMaskUrl"
                             href="https://metamask.io/"
                             rel="noopener noreferrer"
                             target="_blank"
                           >
-                            Metamask
+                            MetaMask
                           </a>
-                          . This means this website has no control over your vote, it merely facilitates the process. Please install Metamask, or any other web3 provider to post messages to the blockchain.
+                           
+                          to post messages to the Ethereum blockchain.
                         </p>
                       </ForwardRef(Typography)>
                     </WithStyles(ForwardRef(Typography))>

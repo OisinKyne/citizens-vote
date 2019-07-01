@@ -1,10 +1,9 @@
 import Bill from "../OireachtasService/interfaces/iBill";
 import React from "react";
-import { shallow, mount, ShallowWrapper, CommonWrapper } from "enzyme";
+import { shallow, mount, ShallowWrapper, ReactWrapper } from "enzyme";
 import CastVoteModalComponent from "./CastVoteModalComponent";
 import defaultApiResponse from "../OireachtasService/defaultApiResponse.json";
 import logger from "../logger/winston";
-import { Button } from "@material-ui/core";
 
 describe("CastVoteModal Component", () => {
   let blankCastVoteModalComponent: ReactWrapper;
@@ -66,25 +65,38 @@ describe("CastVoteModal Component", () => {
       uri: "",
       versions: []
     };
-    
+
     const castVote = jest.fn(() => {});
-    const handleClose = jest.fn(() => { });
+    const handleClose = jest.fn(() => {});
     const inFavour = false;
     const open = false;
 
     blankCastVoteModalComponent = mount(
-      <CastVoteModalComponent bill={blankBill} castVote={castVote} open={open} inFavour={inFavour} handleClose={handleClose}/>
+      <CastVoteModalComponent
+        bill={blankBill}
+        castVote={castVote}
+        open={open}
+        inFavour={inFavour}
+        handleClose={handleClose}
+      />
     );
 
     filledBill = defaultApiResponse.results[0].bill;
     filledCastVoteModalComponent = shallow(
-      <CastVoteModalComponent bill={filledBill} castVote={castVote} open={open} inFavour={inFavour} handleClose={handleClose} ref={undefined}/>
+      <CastVoteModalComponent
+        bill={filledBill}
+        castVote={castVote}
+        open={open}
+        inFavour={inFavour}
+        handleClose={handleClose}
+        ref={undefined}
+      />
     );
   });
 
   afterEach(() => {
-    blankCastVoteModalComponent.unmount()
-    filledCastVoteModalComponent.unmount()
+    blankCastVoteModalComponent.unmount();
+    filledCastVoteModalComponent.unmount();
   });
 
   it("creates a CastVoteModalComponent ", async function() {
@@ -94,7 +106,7 @@ describe("CastVoteModal Component", () => {
 
   it("clicking Cast Vote calls props.castVote", function() {
     // To do
-    expect(blankCastVoteModalComponent.props()['castVote']).toHaveBeenCalled();
+    expect(blankCastVoteModalComponent.props()["castVote"]).toHaveBeenCalled();
   });
 
   it("contains a form object of class castVoteForm ", async function() {

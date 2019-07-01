@@ -17,13 +17,36 @@ interface State {
   web3: any;
 }
 /**
- * Component to render a passed Bill interface conforming JSON object to a React Component with buttons for voting for and against bills.
+ * Class for interacting with the Blockchain
  */
 export default class BlockchainService extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = { web3: this.getWeb3() };
   }
+
+  /**
+   * Function to check whether there's an injected web3 in this browser.
+   * Returns boolean
+   */
+  public static isWeb3Injected(): boolean {
+    // Modern dapp browsers
+    if (window.ethereum) {
+      logger.info("Window.ethereum provided");
+      return true;
+    }
+    // Legacy dapp browsers
+    else if (window.web3) {
+      logger.info("Window.web3 provided");
+      return true;
+    }
+    // Non-dapp browsers
+    else {
+      logger.warn("No web3 provider detected");
+      return false;
+    }
+  }
+
   // Function to return the injected web3 object supplied by Metamask.
   public async getWeb3(): Promise<Web3> {
     return new Promise(async function(resolve, reject) {
