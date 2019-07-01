@@ -7,7 +7,6 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  TextField,
   Paper,
   Tabs,
   Tab
@@ -93,6 +92,14 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               </Tabs>
             </Paper>
             <DialogContentText>
+              You are going to cast your vote <b>{this.state.inFavour ? 'for' : 'against'}</b> this measure. 
+            </DialogContentText>
+            <DialogContentText>
+              {this.props.bill.longTitleEn}
+            </DialogContentText>
+            {/* Taking out name and email address for now. There are more modern ways to prove an Ethereum Address. 
+            
+            <DialogContentText>
               You have the option to add your name or your email to your vote,
               but keep in mind this is being cast forever to the Blockchain.
             </DialogContentText>
@@ -117,8 +124,8 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               label="Email"
               type="email"
               fullWidth
-            />
-          </DialogContent>
+            />*/}
+          </DialogContent> 
           <DialogActions>
             <Button
               onClick={this.props.handleClose}
@@ -139,7 +146,8 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               }}
               color="primary"
             >
-              Vote
+              Cast Vote
+              {/* Vote Icon */}
               <HowToVoteOutlined />
             </Button>
           </DialogActions>
