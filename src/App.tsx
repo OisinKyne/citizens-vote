@@ -165,8 +165,9 @@ class App extends React.Component<Props, State> {
                 <a href="https://api.oireachtas.ie/">
                   Oireachtas Open Data API
                 </a>
-                ; this website allows you to vote on current Dáil legislation,
-                and record that vote permanently to the Ethereum Blockchain.
+                ; this website allows you to vote on current Dáil &amp; Seanad
+                legislation, and record that vote permanently to the Ethereum
+                Blockchain.
               </Typography>
               <Typography variant="body1" gutterBottom>
                 Citizens vote allows for any citizen to build up a voting record
