@@ -1,4 +1,6 @@
 import React from "react";
+import { withSnackbar } from "notistack";
+
 import Bill from "../OireachtasService/interfaces/iBill";
 import {
   Dialog,
@@ -13,6 +15,8 @@ import {
 } from "@material-ui/core";
 import logger from "../logger/winston";
 import { HowToVoteOutlined, ThumbDown, ThumbUp } from "@material-ui/icons";
+import BlockchainService from "../BlockchainService/blockchainService";
+import blankBill from "../helpers/BlankBill";
 interface Props {
   // Whether dialog should render
   open: boolean;
@@ -22,8 +26,11 @@ interface Props {
   inFavour: boolean;
   // Function to close modal without casting vote
   handleClose: any;
-  // Function to cast vote
-  castVote: any;
+
+  // Functions for toast
+  enqueueSnackbar: any;
+
+  closeSnackbar: any;
 }
 interface State {
   inFavour: boolean;
@@ -46,6 +53,59 @@ class CastVoteModalComponent extends React.Component<Props, State> {
   setTaNilTab() {
     this.setState({ ...this.state, inFavour: this.props.inFavour });
   }
+
+  /**
+   * Function that handles when the 'Cast Vote' button is clicked.
+   *
+   * First, calls the castVote function passed down from App.tsx that handles the web3 stuff
+   * Then creates Snackbars indicating progress.
+   */
+  async castVote(
+    bill: Bill,
+    inFavour: boolean,
+    enqueueSnackbar: any,
+    closeSnackbar: any
+  ): Promise<any> {
+    return new Promise(function(resolve, reject) {
+      logger.info(
+        `Casting Vote. BillTitle: ${bill.shortTitleEn}, inFavour: ${inFavour}`
+      );
+
+      const voteCastNotification = enqueueSnackbar("Casting a vote", {
+        variant: "info"
+      });
+      const blockchainService = new BlockchainService(null);
+      blockchainService
+        .castVote(bill.uri, inFavour)
+
+        // Set a toast saying Ethereum transaction has started
+        .then(castVoteResponse => {
+          logger.info("CastVote() resolved to:  ");
+          console.log(castVoteResponse);
+          closeSnackbar(voteCastNotification);
+          resolve(castVoteResponse);
+        })
+
+        // Give an error message, something went wrong
+        .catch(err => {
+          logger.error(err);
+
+          const voteFailedNotification = enqueueSnackbar(
+            "Failed to cast vote",
+            {
+              variant: "error"
+            }
+          );
+
+          // Clear error
+          setTimeout(() => {
+            closeSnackbar(voteFailedNotification);
+          }, 3000);
+          reject(err);
+        });
+    });
+  }
+
   render() {
     if (!this.props.bill) {
       logger.info(
@@ -92,11 +152,10 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               </Tabs>
             </Paper>
             <DialogContentText>
-              You are going to cast your vote <b>{this.state.inFavour ? 'for' : 'against'}</b> this measure. 
+              You are going to cast your vote{" "}
+              <b>{this.state.inFavour ? "for" : "against"}</b> this measure.
             </DialogContentText>
-            <DialogContentText>
-              {this.props.bill.longTitleEn}
-            </DialogContentText>
+            <DialogContentText>{this.props.bill.longTitleEn}</DialogContentText>
             {/* Taking out name and email address for now. There are more modern ways to prove an Ethereum Address. 
             
             <DialogContentText>
@@ -125,7 +184,7 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               type="email"
               fullWidth
             />*/}
-          </DialogContent> 
+          </DialogContent>
           <DialogActions>
             <Button
               onClick={this.props.handleClose}
@@ -137,12 +196,16 @@ class CastVoteModalComponent extends React.Component<Props, State> {
             <Button
               variant={"contained"}
               onClick={() => {
-                this.props.castVote(
-                  this.props.bill,
-                  this.state.inFavour,
-                  this.state.name,
-                  this.state.email
+                const bill: Bill = this.props.bill
+                  ? this.props.bill
+                  : blankBill;
+                this.castVote(
+                  bill,
+                  this.props.inFavour,
+                  this.props.enqueueSnackbar,
+                  this.props.closeSnackbar
                 );
+                this.props.handleClose();
               }}
               color="primary"
             >
@@ -157,4 +220,4 @@ class CastVoteModalComponent extends React.Component<Props, State> {
   }
 }
 
-export default CastVoteModalComponent;
+export default withSnackbar(CastVoteModalComponent);

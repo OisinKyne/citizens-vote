@@ -109,33 +109,6 @@ class App extends React.Component<Props, State> {
     });
   };
 
-  // Function to cast a vote to the blockchain.
-  castVote = (bill: Bill, inFavour: boolean, name?: string, email?: string) => {
-    logger.info(
-      `Casting Vote. BillTitle: ${
-        bill.shortTitleEn
-      }, inFavour: ${inFavour}, name:${name}, email: ${email}`
-    );
-    const blockchainService = new BlockchainService(null);
-    blockchainService
-      .castVote(bill.uri, inFavour)
-      .then(castVoteResponse => {
-        logger.info("CastVote() resolved to:  ");
-        console.log(castVoteResponse);
-      })
-      .catch(err => {
-        logger.error(
-          "Error thrown getting web3 and sending a vote transaction. "
-        );
-        logger.error(err);
-      });
-
-    this.setState({
-      ...this.state,
-      castVoteModalOpen: false
-    });
-  };
-
   isWeb3User = (): boolean => {
     return BlockchainService.isWeb3Injected();
   };
@@ -152,7 +125,6 @@ class App extends React.Component<Props, State> {
           handleClose={this.handleClose}
           bill={this.state.billToVoteOn}
           inFavour={this.state.inFavour}
-          castVote={this.castVote}
         />
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -162,7 +134,11 @@ class App extends React.Component<Props, State> {
               </Typography>
               <Typography variant="body1" gutterBottom>
                 Through the use of the{" "}
-                <a href="https://api.oireachtas.ie/">
+                <a
+                  href="https://api.oireachtas.ie/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Oireachtas Open Data API
                 </a>
                 ; this website allows you to vote on current Dáil &amp; Seanad

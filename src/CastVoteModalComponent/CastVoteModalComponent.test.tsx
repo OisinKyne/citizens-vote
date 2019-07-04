@@ -4,69 +4,13 @@ import { shallow, mount, ShallowWrapper, ReactWrapper } from "enzyme";
 import CastVoteModalComponent from "./CastVoteModalComponent";
 import defaultApiResponse from "../OireachtasService/defaultApiResponse.json";
 import logger from "../logger/winston";
+import blankBill from "../helpers/BlankBill";
 
 describe("CastVoteModal Component", () => {
   let blankCastVoteModalComponent: ReactWrapper;
   let filledCastVoteModalComponent: ShallowWrapper;
-  let blankBill: Bill;
   let filledBill: Bill;
   beforeEach(() => {
-    blankBill = {
-      act: "",
-      amendmentLists: [],
-      billNo: "",
-      billType: "",
-      billTypeURI: "",
-      billYear: "",
-      debates: [],
-      events: [],
-      lastUpdated: "",
-      longTitleEn: "",
-      longTitleGa: "",
-      method: "",
-      methodURI: "",
-      mostRecentStage: {
-        event: {
-          chamber: {
-            chamberCode: "",
-            showAs: "",
-            uri: ""
-          },
-          dates: [],
-          house: {
-            chamberCode: "",
-            chamberType: "",
-            houseCode: "",
-            houseNo: "",
-            showAs: "",
-            uri: ""
-          },
-          progressStage: 0,
-          showAs: "",
-          stageCompleted: false,
-          stageOutcome: null,
-          stageURI: "",
-          uri: ""
-        }
-      },
-      originHouse: {
-        showAs: "",
-        uri: ""
-      },
-      relatedDocs: [],
-      shortTitleEn: "",
-      shortTitleGa: "",
-      source: "",
-      sourceURI: "",
-      sponsors: [],
-      stages: [],
-      status: "",
-      statusURI: "",
-      uri: "",
-      versions: []
-    };
-
-    const castVote = jest.fn(() => {});
     const handleClose = jest.fn(() => {});
     const inFavour = false;
     const open = false;
@@ -74,7 +18,6 @@ describe("CastVoteModal Component", () => {
     blankCastVoteModalComponent = mount(
       <CastVoteModalComponent
         bill={blankBill}
-        castVote={castVote}
         open={open}
         inFavour={inFavour}
         handleClose={handleClose}
@@ -85,7 +28,6 @@ describe("CastVoteModal Component", () => {
     filledCastVoteModalComponent = shallow(
       <CastVoteModalComponent
         bill={filledBill}
-        castVote={castVote}
         open={open}
         inFavour={inFavour}
         handleClose={handleClose}

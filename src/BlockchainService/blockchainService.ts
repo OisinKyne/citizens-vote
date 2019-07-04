@@ -111,7 +111,7 @@ export default class BlockchainService extends React.Component<Props, State> {
             voteContractAbi,
             contractAddress,
             {
-              defaultGasPrice: 20000000000
+              defaultGasPrice: web3.eth.gasPrice * 1.1
             }
           );
 
