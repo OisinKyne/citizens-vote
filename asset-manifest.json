@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/citizens-vote/static/css/main.2f279fa6.chunk.css",
-    "main.js": "/citizens-vote/static/js/main.24a0f850.chunk.js",
-    "main.js.map": "/citizens-vote/static/js/main.24a0f850.chunk.js.map",
+    "main.js": "/citizens-vote/static/js/main.4b02015f.chunk.js",
+    "main.js.map": "/citizens-vote/static/js/main.4b02015f.chunk.js.map",
     "runtime~main.js": "/citizens-vote/static/js/runtime~main.074be6c1.js",
     "runtime~main.js.map": "/citizens-vote/static/js/runtime~main.074be6c1.js.map",
-    "static/js/2.8dad7190.chunk.js": "/citizens-vote/static/js/2.8dad7190.chunk.js",
-    "static/js/2.8dad7190.chunk.js.map": "/citizens-vote/static/js/2.8dad7190.chunk.js.map",
+    "static/js/2.db0ad0f2.chunk.js": "/citizens-vote/static/js/2.db0ad0f2.chunk.js",
+    "static/js/2.db0ad0f2.chunk.js.map": "/citizens-vote/static/js/2.db0ad0f2.chunk.js.map",
     "index.html": "/citizens-vote/index.html",
-    "precache-manifest.919aec0c94f29c4ceaf7d694d23454bf.js": "/citizens-vote/precache-manifest.919aec0c94f29c4ceaf7d694d23454bf.js",
+    "precache-manifest.26930c0a14240491bb177d63842518ba.js": "/citizens-vote/precache-manifest.26930c0a14240491bb177d63842518ba.js",
     "service-worker.js": "/citizens-vote/service-worker.js",
     "static/css/main.2f279fa6.chunk.css.map": "/citizens-vote/static/css/main.2f279fa6.chunk.css.map",
     "static/media/ethereum-metamask-chrome.png": "/citizens-vote/static/media/ethereum-metamask-chrome.79226bac.png"
