@@ -38,7 +38,7 @@ export default class BlockchainService extends React.Component<Props, State> {
   public static isWeb3Injected(): boolean {
     // Modern dapp browsers
     if (window.ethereum) {
-      logger.info("Window.ethereum provided");
+      logger.info(`Window.ethereum provided.`);
       return true;
     }
     // Legacy dapp browsers

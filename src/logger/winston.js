@@ -12,7 +12,7 @@ const logger = createLogger({
   defaultMeta: { service: "citizens-vote-ui" },
   transports: [
     new transports.Console({
-      format: format.simple(),
+      format: format.json(),
       level: "warn"
     })
   ]
@@ -23,9 +23,10 @@ const logger = createLogger({
 // with the colorized simple format.
 //
 if (process.env.NODE_ENV !== "production") {
+  logger.clear();
   logger.add(
     new transports.Console({
-      format: format.combine(format.colorize(), format.simple())
+      format: format.colorize()
     })
   );
 }
