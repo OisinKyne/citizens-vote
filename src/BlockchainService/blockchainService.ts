@@ -22,7 +22,13 @@ interface State {
 export default class BlockchainService extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    this.state = { web3: this.getWeb3() };
+    this.state = {
+      web3: this.getWeb3().catch(() => {
+        logger.warn(
+          "Failed to get a web3 object while instantiating Blockchain Service"
+        );
+      })
+    };
   }
 
   /**
@@ -52,7 +58,6 @@ export default class BlockchainService extends React.Component<Props, State> {
     return new Promise(async function(resolve, reject) {
       // Modern dapp browsers...
       if (window.ethereum) {
-        logger.info("Window.ethereum provided");
         window.web3 = new Web3(window.ethereum);
         try {
           // Request account access if needed
@@ -91,9 +96,10 @@ export default class BlockchainService extends React.Component<Props, State> {
     }
   }
 
-  public async castVote(billUri: string, inFavour: boolean) {
+  public async castVote(billUri: string, inFavour: boolean): Promise<any> {
     const web3 = await this.state.web3;
     const networkName = await web3.eth.net.getNetworkType();
+    // Get the address of the Vote Smart Contract depending on which network you are connected to
     const contractAddress = this.getVoteContractAddress(networkName);
 
     if (!web3.eth.defaultAccount) {
@@ -105,44 +111,28 @@ export default class BlockchainService extends React.Component<Props, State> {
 
     return new Promise(function(resolve, reject) {
       // Rinkeby contract address 0xc9f0ceebfa12ec7828245375cfb634bd387bbee7
-      try {
-        if (web3) {
-          const voteContract = new web3.eth.Contract(
-            voteContractAbi,
-            contractAddress,
-            {
-              defaultGasPrice: web3.eth.gasPrice * 1.1
-            }
-          );
 
-          voteContract.methods
-            .vote(billUri, inFavour)
-            .send({ from: web3.eth.defaultAccount })
-            .then((receipt: any) => {
-              resolve(receipt);
-            })
-            .catch((err: any) => {
-              reject(err);
-            });
-        }
-      } catch (error) {
-        logger.error(
-          "Something went wrong casting a vote. Rejecting with the error. "
+      if (web3) {
+        const voteContract = new web3.eth.Contract(
+          voteContractAbi,
+          contractAddress,
+          {
+            defaultGasPrice: web3.eth.gasPrice * 1.1
+          }
         );
-        reject(error);
+
+        voteContract.methods
+          .vote(billUri, inFavour)
+          .send({ from: web3.eth.defaultAccount })
+          .then((receipt: any) => {
+            resolve(receipt);
+          })
+          .catch((err: any) => {
+            reject(err);
+          });
+      } else {
+        reject("No web3 object could be read from state");
       }
     });
-  }
-
-  // Function to prepare a JSON string for broadcasting to the blockchain.
-  public prepareMessage(
-    bill_status = "Current",
-    date_start = "2019-05-01",
-    date_end = "2019-06-08",
-    result_limit = "50",
-    chamber_id = "",
-    language = "en"
-  ) {
-    return `https://api.oireachtas.ie/v1/legislation?bill_status=${bill_status}&bill_source=Government,Private%20Member&date_start=${date_start}&date_end=${date_end}&limit=${result_limit}&chamber_id=${chamber_id}&lang=${language}`;
   }
 }

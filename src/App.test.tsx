@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { mount, shallow } from "enzyme";
+import { SnackbarProvider } from "notistack";
 
 describe("App.tsx", () => {
   let shallowApp: any;
@@ -10,7 +11,11 @@ describe("App.tsx", () => {
   });
 
   it("renders without crashing", async () => {
-    const app = mount(<App />);
+    const app = mount(
+      <SnackbarProvider>
+        <App />
+      </SnackbarProvider>
+    );
     expect(app).toBeTruthy();
   });
 

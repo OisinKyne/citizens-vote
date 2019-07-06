@@ -1,6 +1,5 @@
 import React from "react";
 import { withSnackbar } from "notistack";
-
 import Bill from "../OireachtasService/interfaces/iBill";
 import {
   Dialog,
@@ -17,6 +16,7 @@ import logger from "../logger/winston";
 import { HowToVoteOutlined, ThumbDown, ThumbUp } from "@material-ui/icons";
 import BlockchainService from "../BlockchainService/blockchainService";
 import blankBill from "../helpers/BlankBill";
+
 interface Props {
   // Whether dialog should render
   open: boolean;
@@ -26,19 +26,21 @@ interface Props {
   inFavour: boolean;
   // Function to close modal without casting vote
   handleClose: any;
-
   // Functions for toast
   enqueueSnackbar: any;
-
   closeSnackbar: any;
 }
+
 interface State {
   inFavour: boolean;
   name: string;
   email: string;
 }
+
 /**
- * Component to present a user with a summary of their vote
+ * Component to present a user with a summary of their vote before they cast it with metamask
+ *
+ * Once a vote is cast and the transaction is mined, the bill is saved to localstorage on the clients browser
  */
 class CastVoteModalComponent extends React.Component<Props, State> {
   constructor(props: any) {
@@ -71,7 +73,7 @@ class CastVoteModalComponent extends React.Component<Props, State> {
         `Casting Vote. BillTitle: ${bill.shortTitleEn}, inFavour: ${inFavour}`
       );
 
-      const voteCastNotification = enqueueSnackbar("Casting a vote", {
+      const voteCastNotification = enqueueSnackbar("Casting your vote", {
         variant: "info"
       });
       const blockchainService = new BlockchainService(null);
@@ -79,17 +81,16 @@ class CastVoteModalComponent extends React.Component<Props, State> {
         .castVote(bill.uri, inFavour)
 
         // Set a toast saying Ethereum transaction has started
-        .then(castVoteResponse => {
-          logger.info("CastVote() resolved to:  ");
-          console.log(castVoteResponse);
+        .then(() => {
+          logger.info(
+            "BlockchainServcice.CastVote() resolved, closing Vote Cast Snackbar"
+          );
           closeSnackbar(voteCastNotification);
-          resolve(castVoteResponse);
+          resolve();
         })
 
-        // Give an error message, something went wrong
-        .catch(err => {
-          logger.error(err);
-
+        // Give an error Snackbar to the user, something went wrong
+        .catch(() => {
           const voteFailedNotification = enqueueSnackbar(
             "Failed to cast vote",
             {
@@ -101,7 +102,12 @@ class CastVoteModalComponent extends React.Component<Props, State> {
           setTimeout(() => {
             closeSnackbar(voteFailedNotification);
           }, 3000);
-          reject(err);
+
+          // Log a warning
+          logger.warn(
+            "BlockchainService.voteCast triggered a catch block, user likely rejected transaction"
+          );
+          reject("BlockchainService.voteCast triggered a catch block");
         });
     });
   }
@@ -156,37 +162,10 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               <b>{this.state.inFavour ? "for" : "against"}</b> this measure.
             </DialogContentText>
             <DialogContentText>{this.props.bill.longTitleEn}</DialogContentText>
-            {/* Taking out name and email address for now. There are more modern ways to prove an Ethereum Address. 
-            
-            <DialogContentText>
-              You have the option to add your name or your email to your vote,
-              but keep in mind this is being cast forever to the Blockchain.
-            </DialogContentText>
-            <TextField
-              margin="dense"
-              id="name"
-              value={this.state.name}
-              onChange={(e: any) => {
-                this.setState({ ...this.state, name: e.target.value });
-              }}
-              label="Name"
-              type="text"
-              fullWidth
-            />
-            <TextField
-              margin="dense"
-              id="email"
-              value={this.state.email}
-              onChange={(e: any) => {
-                this.setState({ ...this.state, email: e.target.value });
-              }}
-              label="Email"
-              type="email"
-              fullWidth
-            />*/}
           </DialogContent>
           <DialogActions>
             <Button
+              id={"CancelVoteButton"}
               onClick={this.props.handleClose}
               color="primary"
               variant={"contained"}
@@ -194,6 +173,7 @@ class CastVoteModalComponent extends React.Component<Props, State> {
               Cancel
             </Button>
             <Button
+              id={"CastVoteButton"}
               variant={"contained"}
               onClick={() => {
                 const bill: Bill = this.props.bill
@@ -204,7 +184,13 @@ class CastVoteModalComponent extends React.Component<Props, State> {
                   this.props.inFavour,
                   this.props.enqueueSnackbar,
                   this.props.closeSnackbar
-                );
+                )
+                  .then(() => {
+                    logger.info("Cast vote button on click returned");
+                  })
+                  .catch(() => {
+                    logger.warn("Casting a vote failed");
+                  });
                 this.props.handleClose();
               }}
               color="primary"

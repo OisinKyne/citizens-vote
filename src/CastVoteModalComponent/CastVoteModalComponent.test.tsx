@@ -5,38 +5,42 @@ import CastVoteModalComponent from "./CastVoteModalComponent";
 import defaultApiResponse from "../OireachtasService/defaultApiResponse.json";
 import logger from "../logger/winston";
 import blankBill from "../helpers/BlankBill";
+import { SnackbarProvider } from "notistack";
 
 describe("CastVoteModal Component", () => {
   let blankCastVoteModalComponent: ReactWrapper;
-  let filledCastVoteModalComponent: ShallowWrapper;
+  let filledCastVoteModalComponent: ReactWrapper;
   let filledBill: Bill;
-  beforeEach(() => {
+  beforeAll(() => {
     const handleClose = jest.fn(() => {});
     const inFavour = false;
     const open = false;
 
     blankCastVoteModalComponent = mount(
-      <CastVoteModalComponent
-        bill={blankBill}
-        open={open}
-        inFavour={inFavour}
-        handleClose={handleClose}
-      />
+      <SnackbarProvider maxSnack={1}>
+        <CastVoteModalComponent
+          bill={blankBill}
+          open={open}
+          inFavour={inFavour}
+          handleClose={handleClose}
+        />
+      </SnackbarProvider>
     );
 
     filledBill = defaultApiResponse.results[0].bill;
-    filledCastVoteModalComponent = shallow(
-      <CastVoteModalComponent
-        bill={filledBill}
-        open={open}
-        inFavour={inFavour}
-        handleClose={handleClose}
-        ref={undefined}
-      />
+    filledCastVoteModalComponent = mount(
+      <SnackbarProvider>
+        <CastVoteModalComponent
+          bill={filledBill}
+          open={open}
+          inFavour={inFavour}
+          handleClose={handleClose}
+        />
+      </SnackbarProvider>
     );
   });
 
-  afterEach(() => {
+  afterAll(() => {
     blankCastVoteModalComponent.unmount();
     filledCastVoteModalComponent.unmount();
   });
@@ -46,9 +50,10 @@ describe("CastVoteModal Component", () => {
     expect(filledCastVoteModalComponent).toBeTruthy();
   });
 
-  it("clicking Cast Vote calls props.castVote", function() {
+  it("clicking Cast Vote calls props.handleClose", function() {
     // To do
-    expect(blankCastVoteModalComponent.props()["castVote"]).toHaveBeenCalled();
+    const button = blankCastVoteModalComponent.find("CastVoteButton");
+    expect(blankCastVoteModalComponent.children.props()).toHaveBeenCalled();
   });
 
   it("contains a form object of class castVoteForm ", async function() {
