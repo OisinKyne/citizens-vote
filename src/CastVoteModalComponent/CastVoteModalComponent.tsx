@@ -73,42 +73,69 @@ class CastVoteModalComponent extends React.Component<Props, State> {
         `Casting Vote. BillTitle: ${bill.shortTitleEn}, inFavour: ${inFavour}`
       );
 
+      // Set a toast saying Ethereum transaction has started
       const voteCastNotification = enqueueSnackbar("Casting your vote", {
         variant: "info"
       });
-      const blockchainService = new BlockchainService(null);
-      blockchainService
-        .castVote(bill.uri, inFavour)
+      const blockchainService = new BlockchainService();
+      return (
+        blockchainService
+          .castVote(bill.uri, inFavour)
 
-        // Set a toast saying Ethereum transaction has started
-        .then(() => {
-          logger.info(
-            "BlockchainServcice.CastVote() resolved, closing Vote Cast Snackbar"
-          );
-          closeSnackbar(voteCastNotification);
-          resolve();
-        })
+          // Set a toast saying Ethereum transaction has been mined
+          .then(() => {
+            closeSnackbar(voteCastNotification);
+            const voteMinedNotification = enqueueSnackbar(
+              "Vote recorded on the blockchain",
+              {
+                variant: "success"
+              }
+            );
+            // Clear success
+            setTimeout(() => {
+              closeSnackbar(voteMinedNotification);
+            }, 3000);
 
-        // Give an error Snackbar to the user, something went wrong
-        .catch(() => {
-          const voteFailedNotification = enqueueSnackbar(
-            "Failed to cast vote",
-            {
-              variant: "error"
-            }
-          );
+            resolve("Vote Cast");
+          })
 
-          // Clear error
-          setTimeout(() => {
-            closeSnackbar(voteFailedNotification);
-          }, 3000);
+          // Give an error Snackbar to the user, something went wrong
+          .catch(err => {
+            const voteFailedNotification = enqueueSnackbar(
+              "Failed to cast vote",
+              {
+                variant: "error"
+              }
+            );
 
-          // Log a warning
-          logger.warn(
-            "BlockchainService.voteCast triggered a catch block, user likely rejected transaction"
-          );
-          reject("BlockchainService.voteCast triggered a catch block");
-        });
+            // Clear error
+            setTimeout(() => {
+              closeSnackbar(voteFailedNotification);
+            }, 3000);
+
+            // Log a warning
+            logger.warn(
+              `BlockchainService.voteCast triggered a catch, user likely rejected transaction: Error thrown: ${JSON.stringify(
+                err
+              )}`
+            );
+            reject("BlockchainService.castVote triggered a catch block");
+          })
+      );
+    });
+  }
+
+  /** Function that takes a bill, a vote, and a chain transaction, and writes a log of the vote to a users localstorage
+   *
+   * This is used for hiding/displaying that a given user has already cast a vote for a particular bill
+   */
+  async writeVoteToLocalStorage(
+    bill: Bill,
+    inFavour: boolean,
+    transactionReceipt?: any
+  ): Promise<any> {
+    return new Promise(function(resolve, reject) {
+      logger.info("Write to local storage called. ");
     });
   }
 
@@ -181,15 +208,19 @@ class CastVoteModalComponent extends React.Component<Props, State> {
                   : blankBill;
                 this.castVote(
                   bill,
-                  this.props.inFavour,
+                  this.state.inFavour,
                   this.props.enqueueSnackbar,
                   this.props.closeSnackbar
                 )
-                  .then(() => {
+                  .then(voteReceipt => {
                     logger.info("Cast vote button on click returned");
+                    logger.info(
+                      `Vote Receipt Object: ${JSON.stringify(voteReceipt)}`
+                    );
+                    this.writeVoteToLocalStorage(bill, this.state.inFavour);
                   })
-                  .catch(() => {
-                    logger.warn("Casting a vote failed");
+                  .catch(err => {
+                    logger.warn(`Casting a vote failed: ${err}`);
                   });
                 this.props.handleClose();
               }}

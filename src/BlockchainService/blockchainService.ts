@@ -1,36 +1,49 @@
 import Web3 from "web3";
-import React from "react";
 import logger from "../logger/winston";
-import voteContractAbi from "../Contracts/NationalVote.abi.json";
 import contractAddresses from "../Contracts/ContractAddresses.json";
+import { AbiItem } from "web3-utils";
 
 // Stop typescript complaining about the window definition not having ethereum or web3 in it
-declare let window: any; // <--- Declare it like this
+declare let window: any;
 
-/**
- * Service for sending/getting messages from the Blockchain
- *
- *
- */
-interface Props {}
-interface State {
-  web3: any;
-}
+// ABI for the deployed contract
+const voteContractAbi: AbiItem = {
+  constant: false,
+  inputs: [
+    {
+      name: "billUri",
+      type: "string"
+    },
+    {
+      name: "inFavour",
+      type: "bool"
+    }
+  ],
+  name: "vote",
+  outputs: [],
+  payable: false,
+  stateMutability: "nonpayable",
+  type: "function"
+};
+
 /**
  * Class for interacting with the Blockchain
  */
-export default class BlockchainService extends React.Component<Props, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      web3: this.getWeb3().catch(() => {
-        logger.warn(
-          "Failed to get a web3 object while instantiating Blockchain Service"
-        );
+export default class BlockchainService {
+  web3Object: Web3;
+  constructor() {
+    this.web3Object = new Web3(Web3.givenProvider);
+    this.getWeb3()
+      .then(web3 => {
+        this.web3Object = web3;
       })
-    };
+      .catch(() => {
+        this.web3Object = new Web3(Web3.givenProvider);
+        logger.error(
+          "Failed to get an instance of Web3 while instantiating BlockchainService"
+        );
+      });
   }
-
   /**
    * Function to check whether there's an injected web3 in this browser.
    * Returns boolean
@@ -87,7 +100,7 @@ export default class BlockchainService extends React.Component<Props, State> {
   }
 
   // Function that looks up ContractAddresses.json and returns the address of the vote contract on that network.
-  public getVoteContractAddress(networkName: "main" | "rinkeby"): string {
+  public getVoteContractAddress(networkName: string): string {
     if (networkName === "rinkeby") return contractAddresses.rinkeby.address;
     else if (networkName === "main") {
       return contractAddresses.main.address;
@@ -96,43 +109,42 @@ export default class BlockchainService extends React.Component<Props, State> {
     }
   }
 
+  /**
+   * This function calls a simple smart contract that has a vote method, that emits an event.
+   * The event emits the callers address, the URI of the bill they are voting on, and in inFavour/against boolean.
+   *
+   * @param billUri The URI of the bill to be put on chain
+   * @param inFavour true = inFavour of bill, false = against bill
+   */
   public async castVote(billUri: string, inFavour: boolean): Promise<any> {
-    const web3 = await this.state.web3;
-    const networkName = await web3.eth.net.getNetworkType();
+    const networkName = await this.web3Object.eth.net.getNetworkType();
     // Get the address of the Vote Smart Contract depending on which network you are connected to
     const contractAddress = this.getVoteContractAddress(networkName);
-
-    if (!web3.eth.defaultAccount) {
+    const senderAddress = this.web3Object.eth.defaultAccount;
+    if (!senderAddress) {
       // There is no default account set. For now just fail as it is likely something has gone wrong.
       throw new Error(
         "No web3.eth.defaultAccount available. Something went wrong. "
       );
     }
+    const voteContract = new this.web3Object.eth.Contract(
+      voteContractAbi,
+      contractAddress
+    );
 
     return new Promise(function(resolve, reject) {
       // Rinkeby contract address 0xc9f0ceebfa12ec7828245375cfb634bd387bbee7
 
-      if (web3) {
-        const voteContract = new web3.eth.Contract(
-          voteContractAbi,
-          contractAddress,
-          {
-            defaultGasPrice: web3.eth.gasPrice * 1.1
-          }
-        );
-
-        voteContract.methods
-          .vote(billUri, inFavour)
-          .send({ from: web3.eth.defaultAccount })
-          .then((receipt: any) => {
-            resolve(receipt);
-          })
-          .catch((err: any) => {
-            reject(err);
-          });
-      } else {
-        reject("No web3 object could be read from state");
-      }
+      voteContract.methods
+        .vote(billUri, inFavour)
+        .send({ from: senderAddress })
+        .then((receipt: any) => {
+          resolve(receipt);
+        })
+        .catch((err: any) => {
+          logger.error("### web3 call hitting a catch");
+          reject(err);
+        });
     });
   }
 }
