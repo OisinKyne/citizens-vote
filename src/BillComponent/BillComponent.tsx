@@ -64,14 +64,16 @@ class BillComponent extends React.Component<Props, State> {
                     {/* Print the current house */}
                     <b>House:</b>{" "}
                     <a
-                      href={this.props.bill.mostRecentStage.event.chamber.uri}
+                      href={!!this.props.bill.mostRecentStage.event.chamber
+                        ? this.props.bill.mostRecentStage.event.chamber.uri
+                        : "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={"billPdfUrl"}
                     >
-                      {!!this.props.bill.mostRecentStage.event.chamber.showAs
+                      {!!this.props.bill.mostRecentStage.event.chamber
                         ? this.props.bill.mostRecentStage.event.chamber.showAs
-                        : "-"}
+                        : ""}
                     </a>
                   </Typography>
                 </Grid>

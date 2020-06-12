@@ -4,23 +4,23 @@
   "private": true,
   "homepage": "http://oisinkyne.github.io/citizens-vote",
   "dependencies": {
-    "@material-ui/core": "^4.1.3",
-    "@material-ui/icons": "^4.2.1",
-    "@types/enzyme": "^3.10.1",
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "@types/enzyme": "^3.10.5",
     "@types/jest": "24.0.12",
     "@types/node": "12.0.0",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
-    "@types/request": "^2.48.1",
-    "@types/request-promise-native": "^1.0.16",
-    "notistack": "^0.8.8",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
+    "@types/request": "^2.48.5",
+    "@types/request-promise-native": "^1.0.17",
+    "notistack": "^0.8.9",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8",
     "typescript": "3.4.5",
-    "web3": "^1.0.0-beta.55",
+    "web3": "^1.2.9",
     "winston": "^3.2.1"
   },
   "scripts": {
@@ -48,10 +48,10 @@
     ]
   },
   "devDependencies": {
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "enzyme-to-json": "^3.3.5",
-    "gh-pages": "^2.0.1"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.5.0",
+    "gh-pages": "^2.2.0"
   },
   "jest": {
     "collectCoverageFrom": [
